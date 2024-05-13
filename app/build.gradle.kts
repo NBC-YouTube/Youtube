@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinParcelize)
 }
 
 val properties = Properties()
