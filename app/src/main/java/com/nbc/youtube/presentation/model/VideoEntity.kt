@@ -14,14 +14,14 @@ import kotlinx.parcelize.Parcelize
  * @param thumbnail 썸네일 주소, Repository에서 화질이 제일 좋은 아이템의 URL로 넘겨주세요.
  * @param categoryId 영상의 카테고리 값
  */
-@Entity // 데이터 테이블
+@Entity(tableName = "video_entitiy")
 @Parcelize
 data class VideoEntity (
-    @PrimaryKey val videoId: String, // 기본 키
     val releaseDate: String,
     val channelId: String,
     val title: String,
     val description: String,
     val thumbnail: String,
     val categoryId: String,
+    val thumbnailUrl: String
 ): Parcelable
