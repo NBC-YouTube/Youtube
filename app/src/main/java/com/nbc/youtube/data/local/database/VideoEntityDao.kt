@@ -38,7 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
             instance ?: synchronized(this) {
                 instance ?: Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java, "youtube_database"
+                    AppDatabase::class.java, "video_database"
                 ).build().also { instance = it }
             }
     }

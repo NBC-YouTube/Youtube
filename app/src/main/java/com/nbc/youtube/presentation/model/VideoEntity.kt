@@ -23,5 +23,5 @@ data class VideoEntity (
     val description: String,
     val thumbnail: String,
     val categoryId: String,
-    val thumbnailUrl: String
+    val thumbnailUrl: String // 썸네일 이미지
 ): Parcelable

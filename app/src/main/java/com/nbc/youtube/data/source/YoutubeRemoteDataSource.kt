@@ -12,15 +12,17 @@ interface YoutubeRemoteDataSource {
         order: String,
         query: String,
         apiKey: String,
-        safeSearch: String,
+        type: String ="video",
+        safeSearch: String = "strict",
         maxResults: Int
     ): YouTubeSearchResponse
 
     suspend fun fetchPopularVideos(
         part: String,
         apiKey: String,
-        regionCode: String,
-        categoryId: String?,
+        chart: String = "mostPopular",
+        regionCode: String = "KR",
+        categoryId: String? = null,
         maxResults: Int
     ): YouTubeSearchResponse
 }
