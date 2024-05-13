@@ -31,6 +31,9 @@
         <argument
             android:name="videoInfo"
             app:argType="com.nbc.youtube.presentation.model.VideoEntity" />
+        <action
+            android:id="@+id/action_detailFragment_to_myFragment"
+            app:destination="@id/myFragment" />
     </fragment>
     <fragment
         android:id="@+id/myFragment"
@@ -40,5 +43,9 @@
         <action
             android:id="@+id/action_myFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <argument
+            android:name="unlikedVideo"
+            app:argType="com.nbc.youtube.presentation.model.VideoEntity"
+            app:nullable="true" />
     </fragment>
 </navigation>
