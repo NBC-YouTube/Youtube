@@ -21,6 +21,16 @@ class MyFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setUI()
+    }
+
+    private fun setUI() {
+        binding.ivThumbnail.clipToOutline = true
+    }
+
     override fun onDestroyView() {
         _binding = null
 
