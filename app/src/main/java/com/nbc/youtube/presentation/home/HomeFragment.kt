@@ -66,7 +66,10 @@ class HomeFragment : Fragment() {
             adapter = popularVideoAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
-        popularVideoAdapter.listUpdate(testRepo().getPopularVideos(),1)
+        videosViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
+            popularVideoAdapter.listUpdate(data, 1)
+        })
+        videosViewModel.loadPopularVideos()
     }
     private fun categoryBind() {
         with(binding.rvCategoryVideo) {
