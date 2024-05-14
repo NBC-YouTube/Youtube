@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nbc.youtube.databinding.FragmentMyBinding
 import com.nbc.youtube.presentation.model.UserInfo
+import com.nbc.youtube.presentation.model.VideoEntity
 
 
 class MyFragment : Fragment() {
@@ -22,8 +23,8 @@ class MyFragment : Fragment() {
     }
 
     private val adapter = MyAdapter {
-//        val action = DetailFragmentDirections.confirmAction(it)
-//        findNavController().navigate(action)
+        val action = MyFragmentDirections.actionMyFragmentToDetailFragment(it)
+        findNavController().navigate(action)
     }
 
     override fun onCreateView(
@@ -34,10 +35,15 @@ class MyFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        loadUserInfo()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadUserInfo()
         setThumbnailClip()
         setRecyclerView()
         setObserve()
@@ -45,7 +51,6 @@ class MyFragment : Fragment() {
 
     private fun loadUserInfo() {
         viewModel.loadUserInfo()
-        viewModel.loadUserFavoriteVideo()
     }
 
     private fun setThumbnailClip() {
@@ -63,6 +68,9 @@ class MyFragment : Fragment() {
         viewModel.favoriteVideos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoEntity>(KEY_FOR_VIDEO_ENTITY_DISLIKED)?.observe(viewLifecycleOwner) { video ->
+            viewModel.removeFavoriteVideo(video)
+        }
     }
 
     private fun setUI(userInfo: UserInfo) {
@@ -78,10 +86,7 @@ class MyFragment : Fragment() {
         binding.tvDescription.text = userInfo.introduction
     }
 
-    override fun onDestroyView() {
-        binding.rvFavoriteVideo.adapter = null
-        _binding = null
-
-        super.onDestroyView()
+    companion object {
+        const val KEY_FOR_VIDEO_ENTITY_DISLIKED = "KEY_FOR_VIDEO_ENTITY_DISLIKED"
     }
 }

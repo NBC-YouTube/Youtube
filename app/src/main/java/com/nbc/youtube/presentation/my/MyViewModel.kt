@@ -27,15 +27,20 @@ class MyViewModel(
                 val info = repository.getUserInfo()
                 _userInfo.value = info
             }
-        }
-    }
-
-    fun loadUserFavoriteVideo() {
-        viewModelScope.launch {
             runCatching {
                 val videos = repository.getFavoriteVideos()
                 _favoriteVideos.value = videos
             }
         }
+    }
+
+    fun removeFavoriteVideo(video: VideoEntity) {
+        viewModelScope.launch {
+            repository.removeFavoriteVideo(video)
+        }
+        val videos = _favoriteVideos.value?.toMutableList() ?: return
+
+        videos.remove(video)
+        _favoriteVideos.value = videos
     }
 }
