@@ -76,7 +76,10 @@ class HomeFragment : Fragment() {
             adapter = categoryVideoAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
-        categoryVideoAdapter.listUpdate(testRepo().getPopularVideos(),2)
+        videosViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
+            categoryVideoAdapter.listUpdate(data, 2)
+        })
+        videosViewModel.loadCategoryVideos("test")
     }
 
     private fun categorySpinnerBind() {
