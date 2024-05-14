@@ -45,6 +45,7 @@ class MyFragment : Fragment() {
 
     private fun loadUserInfo() {
         viewModel.loadUserInfo()
+        viewModel.loadUserFavoriteVideo()
     }
 
     private fun setThumbnailClip() {
@@ -58,6 +59,9 @@ class MyFragment : Fragment() {
     private fun setObserve() {
         viewModel.userInfo.observe(viewLifecycleOwner) {
             setUI(it)
+        }
+        viewModel.favoriteVideos.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
