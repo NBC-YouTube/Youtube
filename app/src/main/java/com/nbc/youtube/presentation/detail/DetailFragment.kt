@@ -26,8 +26,4 @@ class DetailFragment : Fragment() {
 
         super.onDestroyView()
     }
-
-    companion object {
-        const val BUNDLE_KEY_FOR_DETAIL = "BUNDLE_KEY_FOR_DETAIL"
-    }
 }
