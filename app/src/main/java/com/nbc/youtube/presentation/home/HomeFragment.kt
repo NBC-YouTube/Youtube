@@ -1,20 +1,22 @@
 package com.nbc.youtube.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nbc.youtube.data.repository.testRepo
 import com.nbc.youtube.databinding.FragmentHomeBinding
 import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
 import com.nbc.youtube.presentation.home.videmodels.CategoryViewModel
+import com.nbc.youtube.presentation.home.videmodels.CategoryViewModelFactory
+import com.nbc.youtube.presentation.home.videmodels.VideosViewModel
+import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
 
 
 class HomeFragment : Fragment() {
@@ -24,8 +26,13 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private val popularVideoAdapter by lazy { VideoAdapter() }
     private val categoryVideoAdapter by lazy { VideoAdapter() }
+    private val categoryViewModel by viewModels<CategoryViewModel>{
+        CategoryViewModelFactory()
+    }
+    private val videosViewModel by viewModels<VideosViewModel> {
+        VideosViewModelFactory()
+    }
     private lateinit var categorySpinnerAdapter: CategorySpinnerAdapter
-    private lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +40,14 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         categorySpinnerBind()
         category()
         defaultRecyclerViewBind()
-        return binding.root
     }
 
     override fun onDestroyView() {
@@ -74,13 +85,10 @@ class HomeFragment : Fragment() {
 
 
     private fun category() {
-        categoryViewModel = ViewModelProvider(this).get(CategoryViewModel::class.java)
-        categoryViewModel.categoryFromApi.observe(viewLifecycleOwner, Observer { data ->
+        categoryViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
             categorySpinnerAdapter.setCategoryList(data)
-            Log.d("test", "category:work ${categoryViewModel.categoryFromApi.value}")
         })
         categoryViewModel.loadCategories()
-        Log.d("test", "category: ${categoryViewModel.categoryFromApi.value}")
     }
 
 }

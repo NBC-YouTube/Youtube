@@ -1,7 +1,6 @@
 package com.nbc.youtube.presentation.home.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
         categoryList.clear()
         categoryList.addAll(categories)
         notifyDataSetChanged()
-        Log.d("test", "setCategoryList: work ${categoryList}")
     }
 
     override fun getCount(): Int { //필수. 없으면 인식을 하지 못함.
