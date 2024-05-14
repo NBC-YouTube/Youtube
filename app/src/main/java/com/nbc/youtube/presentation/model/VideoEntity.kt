@@ -6,6 +6,7 @@ import kotlinx.parcelize.Parcelize
 /**
  * @param releaseDate 업로드 날짜
  * @param channelId 채널 고유 ID
+ * @param id 비디오 고유 ID
  * @param channelTitle 채널이름
  * @param title 영상 제목
  * @param description 영상 설명
@@ -15,7 +16,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class VideoEntity (
     val releaseDate: String,
-    val channelId: String,
+    val id : String,
+    val channelTitle: String,
     val title: String,
     val description: String,
     val thumbnail: String,
