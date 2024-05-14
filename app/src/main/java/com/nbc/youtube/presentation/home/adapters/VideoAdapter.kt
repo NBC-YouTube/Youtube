@@ -1,7 +1,6 @@
 package com.nbc.youtube.presentation.home.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,7 +15,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var videoType: Int = 1
 
     interface ItemClick {
-        fun onClick(view: View, position: Int)
+        fun onClick(item: VideoEntity)
     }
 
     var itemClick: ItemClick? = null
@@ -46,7 +45,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentItem = itemList[position]
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it,position)
+            itemClick?.onClick(currentItem)
         }
         when(holder.itemViewType) {
             1 -> {

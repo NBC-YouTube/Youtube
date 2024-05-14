@@ -9,8 +9,8 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nbc.youtube.data.repository.testRepo
 import com.nbc.youtube.databinding.FragmentHomeBinding
 import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
@@ -18,6 +18,8 @@ import com.nbc.youtube.presentation.home.videmodels.CategoryViewModel
 import com.nbc.youtube.presentation.home.videmodels.CategoryViewModelFactory
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModel
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
+import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.my.MyFragmentDirections
 
 
 class HomeFragment : Fragment() {
@@ -49,6 +51,7 @@ class HomeFragment : Fragment() {
         categorySpinnerBind()
         category()
         defaultRecyclerViewBind()
+        itemOnClick()
     }
 
     override fun onDestroyView() {
@@ -96,7 +99,6 @@ class HomeFragment : Fragment() {
                 val selectedItem = categorySpinnerAdapter.getItem(position)
                 videosViewModel.loadCategoryVideos(selectedItem)
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }
@@ -110,5 +112,20 @@ class HomeFragment : Fragment() {
         })
         categoryViewModel.loadCategories()
     }
+
+    private fun itemOnClick() {
+        setItemClick(popularVideoAdapter)
+        setItemClick(categoryVideoAdapter)
+    }
+
+    private fun setItemClick(adapter: VideoAdapter) {
+        adapter.itemClick = object : VideoAdapter.ItemClick {
+            override fun onClick(item: VideoEntity) {
+                val action = MyFragmentDirections.actionMyFragmentToDetailFragment(item)
+                findNavController().navigate(action)
+            }
+        }
+    }
+
 
 }
