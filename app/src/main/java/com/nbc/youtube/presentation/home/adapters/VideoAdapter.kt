@@ -12,8 +12,8 @@ import com.nbc.youtube.databinding.ItemHomeMostPopularBinding
 import com.nbc.youtube.presentation.model.VideoEntity
 
 class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var itemList = listOf<VideoEntity>()
-    var videoType: Int = 1
+    private var itemList = listOf<VideoEntity>()
+    private var videoType: Int = 1
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
@@ -25,11 +25,11 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when(viewType) {
             1 -> {
                 val binding = ItemHomeMostPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                popularHolder(binding)
+                PopularHolder(binding)
             }
             2 -> {
                 val binding = ItemHomeCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                categoryHolder(binding)
+                CategoryHolder(binding)
             }
             else -> throw IllegalArgumentException("Unknown View Type")
         }
@@ -50,15 +50,15 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         when(holder.itemViewType) {
             1 -> {
-                (holder as popularHolder).bind(currentItem)
+                (holder as PopularHolder).bind(currentItem)
             }
             2 -> {
-                (holder as categoryHolder).bind(currentItem)
+                (holder as CategoryHolder).bind(currentItem)
             }
         }
     }
 
-    class popularHolder(private val binding: ItemHomeMostPopularBinding): RecyclerView.ViewHolder(binding.root) {
+    class PopularHolder(private val binding: ItemHomeMostPopularBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: VideoEntity) {
             Glide.with(binding.root)
@@ -69,7 +69,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    class categoryHolder(private val binding: ItemHomeCategoryBinding): RecyclerView.ViewHolder(binding.root) {
+    class CategoryHolder(private val binding: ItemHomeCategoryBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: VideoEntity) {
             Glide.with(binding.root)
