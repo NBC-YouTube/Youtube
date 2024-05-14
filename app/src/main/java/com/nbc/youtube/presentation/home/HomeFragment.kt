@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -79,13 +80,26 @@ class HomeFragment : Fragment() {
         videosViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
             categoryVideoAdapter.listUpdate(data, 2)
         })
-        videosViewModel.loadCategoryVideos("test")
     }
 
     private fun categorySpinnerBind() {
         val spinner: Spinner = binding.spCategoryList
         categorySpinnerAdapter = CategorySpinnerAdapter(requireContext())
         spinner.adapter = categorySpinnerAdapter
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedItem = categorySpinnerAdapter.getItem(position)
+                videosViewModel.loadCategoryVideos(selectedItem)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
     }
 
 
