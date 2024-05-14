@@ -8,10 +8,12 @@ import retrofit2.awaitResponse
 * Youtube 데이터를 비동기적으로 가져오는 두 가지 주요 기능을 구현한다
 * 이 인터페이스는 실제 http요청을 수행하는 메서드를 정의해야한다.*/
 // YoutubeRemoteDataSource 인터페이스의 구현체
-class YoutubeRemoteDataSourceImpl(private val youtubeService: YouTubeService // YoutubeService 주입
+class YoutubeRemoteDataSourceImpl(
+    private val youtubeService: YouTubeService, // Retrofit을 통해 생성된 YouTubeService 인터페이스의 인스턴스
+    private val apiKey: String // YouTube API 키
 ) : YoutubeRemoteDataSource {
 
-    override suspend fun fetchSearchVideo(
+    override suspend fun getSearchVideo(
         part: String,
         order: String,
         query: String,
@@ -20,19 +22,29 @@ class YoutubeRemoteDataSourceImpl(private val youtubeService: YouTubeService // 
         safeSearch: String,
         maxResults: Int
     ): YouTubeSearchResponse {
-        // 실제 네트워크 요청을 실행하고 결과를 반환
-        return youtubeService.getSearchVideo(part, order, query, apiKey, type, safeSearch, maxResults)
+        return youtubeService.getSearchVideo(part, order, query, this.apiKey, type, safeSearch, maxResults)
     }
 
-    override suspend fun fetchPopularVideos(
+    override suspend fun getPopularVideos(
         part: String,
-        apiKey: String,
         chart: String,
         regionCode: String,
-        categoryId: String?,
+        apiKey: String,
         maxResults: Int
     ): YouTubeSearchResponse {
-        // 실제 네트워크 요청을 실행하고 결과를 반환
-        return youtubeService.getPopularVideos(part, apiKey, chart, regionCode, categoryId, maxResults)
+        return youtubeService.getPopularVideos(part, chart, regionCode, this.apiKey, maxResults)
+    }
+
+    override suspend fun getCategoryVideos(
+        part: String,
+        chart: String,
+        regionCode: String,
+        videoCategoryId: String?,
+        apiKey: String,
+        maxResults: Int
+    ): YouTubeSearchResponse {
+        return youtubeService.getCategoryVideos(part, chart, regionCode,
+            videoCategoryId, this.apiKey, maxResults)
     }
 }
+

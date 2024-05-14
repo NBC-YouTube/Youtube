@@ -7,22 +7,32 @@ import com.nbc.youtube.data.remote.network.YouTubeSearchResponse
 * interface와 class를 분리함으로써, 유지보수성, 확장성 및 테스트 용이성이 향상된다.*/
 
 interface YoutubeRemoteDataSource {
-    suspend fun fetchSearchVideo( // 비동기적으로 나타낼 수 있음 suspend
-        part: String, // 매개변수
+    // Youtube api를 통해 비디오 검색과 인기 비디오 목록을 가져오기 위한 메서드들을 정의
+    suspend fun getSearchVideo(
+        part: String,
         order: String,
         query: String,
         apiKey: String,
-        type: String ="video",
+        type: String = "video",
         safeSearch: String = "strict",
-        maxResults: Int
+        maxResults: Int = 20
     ): YouTubeSearchResponse
 
-    suspend fun fetchPopularVideos(
+    suspend fun getPopularVideos(
         part: String,
-        apiKey: String,
         chart: String = "mostPopular",
         regionCode: String = "KR",
-        categoryId: String? = null,
-        maxResults: Int
+        apiKey: String,
+        maxResults: Int = 20
+    ): YouTubeSearchResponse
+
+    suspend fun getCategoryVideos(
+        part: String,
+        chart: String,
+        regionCode: String = "KR",
+        videoCategoryId: String? = null,
+        apiKey: String,
+        maxResults: Int= 20
     ): YouTubeSearchResponse
 }
+

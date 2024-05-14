@@ -1,10 +1,13 @@
 package com.nbc.youtube.data.remote.network
 
+import com.nbc.youtube.presentation.model.VideoEntity
+
 
 data class YouTubeSearchResponse( // 검색 결과
-    val items: List<Item>,
+    val items: List<VideoEntity>,
 )
 
+/*
 data class Item( // 각 개별 아이템
     val id: Id,
     val snippet: Snippet,
@@ -20,7 +23,7 @@ data class Snippet( // 해당 비디오의 세부 정보
     val title: String, // 비디오의 제목
     val description: String, // 비디오의 설명
     val thumbnails: Thumbnails, // 썸네일 이미지
-    val channelTitle: String // 채널 제목
+    val channelTitle: String, // 채널 제목
 )
 
 data class Thumbnails(
@@ -31,4 +34,4 @@ data class Thumbnails(
 
 data class ThumbnailDetail(
     val url: String,
-)
+)*/

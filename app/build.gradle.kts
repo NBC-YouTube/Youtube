@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinParcelize)
+    id("kotlin-parcelize")
 }
 
 val properties = Properties()
