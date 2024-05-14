@@ -44,7 +44,7 @@ class MyAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            ItemFavoriteVideoBinding.inflate(LayoutInflater.from(parent.context)),
+            ItemFavoriteVideoBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onClick,
         )
     }
