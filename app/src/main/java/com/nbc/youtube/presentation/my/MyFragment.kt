@@ -84,8 +84,4 @@ class MyFragment : Fragment() {
 
         super.onDestroyView()
     }
-
-    companion object {
-        const val BUNDLE_KEY_FOR_CANCEL = "BUNDLE_KEY_FOR_CANCEL"
-    }
 }
