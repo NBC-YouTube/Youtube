@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinParcelize)
+    /*지속적으로 에러가 발생하여 추가*/
     id("kotlin-parcelize")
 }
 
