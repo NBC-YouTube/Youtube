@@ -14,12 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nbc.youtube.databinding.FragmentHomeBinding
 import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
-import com.nbc.youtube.presentation.home.videmodels.CategoryViewModel
-import com.nbc.youtube.presentation.home.videmodels.CategoryViewModelFactory
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModel
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
 import com.nbc.youtube.presentation.model.VideoEntity
-import com.nbc.youtube.presentation.my.MyFragmentDirections
 
 
 class HomeFragment : Fragment() {
@@ -29,13 +26,16 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private val popularVideoAdapter by lazy { VideoAdapter() }
     private val categoryVideoAdapter by lazy { VideoAdapter() }
-    private val categoryViewModel by viewModels<CategoryViewModel>{
-        CategoryViewModelFactory()
-    }
     private val videosViewModel by viewModels<VideosViewModel> {
         VideosViewModelFactory()
     }
-    private lateinit var categorySpinnerAdapter: CategorySpinnerAdapter
+    private val spinnerAdapter by lazy { CategorySpinnerAdapter(requireContext()) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        videosViewModel.loadPopularVideos()
+        videosViewModel.loadCategories()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +49,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categorySpinnerBind()
-        category()
         defaultRecyclerViewBind()
+        getCategoriesItem()
         itemOnClick()
     }
 
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 
     private fun defaultRecyclerViewBind() {
         rvMostPopularBind()
-        categoryBind()
+        rvCategoryBind()
     }
 
     private fun rvMostPopularBind() {
@@ -73,9 +73,8 @@ class HomeFragment : Fragment() {
         videosViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
             popularVideoAdapter.listUpdate(data, 1)
         })
-        videosViewModel.loadPopularVideos()
     }
-    private fun categoryBind() {
+    private fun rvCategoryBind() {
         with(binding.rvCategoryVideo) {
             adapter = categoryVideoAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -87,8 +86,7 @@ class HomeFragment : Fragment() {
 
     private fun categorySpinnerBind() {
         val spinner: Spinner = binding.spCategoryList
-        categorySpinnerAdapter = CategorySpinnerAdapter(requireContext())
-        spinner.adapter = categorySpinnerAdapter
+        spinner.adapter = spinnerAdapter
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -96,7 +94,7 @@ class HomeFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedItem = categorySpinnerAdapter.getItem(position)
+                val selectedItem = spinnerAdapter.getItem(position)
                 videosViewModel.loadCategoryVideos(selectedItem)
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -105,12 +103,10 @@ class HomeFragment : Fragment() {
     }
 
 
-
-    private fun category() {
-        categoryViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
-            categorySpinnerAdapter.setCategoryList(data)
+    private fun getCategoriesItem() {
+        videosViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
+            spinnerAdapter.setCategoryList(data)
         })
-        categoryViewModel.loadCategories()
     }
 
     private fun itemOnClick() {
@@ -121,7 +117,7 @@ class HomeFragment : Fragment() {
     private fun setItemClick(adapter: VideoAdapter) {
         adapter.itemClick = object : VideoAdapter.ItemClick {
             override fun onClick(item: VideoEntity) {
-                val action = MyFragmentDirections.actionMyFragmentToDetailFragment(item)
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(item)
                 findNavController().navigate(action)
             }
         }
