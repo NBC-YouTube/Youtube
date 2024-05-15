@@ -3,4 +3,19 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="library">library</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="search_hint">YouTube 검색</string>
+    <string name="kids_btn">키즈</string>
 </resources>
