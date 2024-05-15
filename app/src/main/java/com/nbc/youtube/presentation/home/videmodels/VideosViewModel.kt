@@ -15,6 +15,14 @@ class VideosViewModel(private val repository: YoutubeRepository) : ViewModel() {
     private val _categoryVideos = MutableLiveData<List<VideoEntity>>()
     val categoryVideos : LiveData<List<VideoEntity>> get() = _categoryVideos
 
+    private val _categories = MutableLiveData<List<String>>()
+    val categories : LiveData<List<String>> get() =_categories
+    fun loadCategories() {
+        viewModelScope.launch {
+            _categories.value = repository.getCategories()
+        }
+    }
+
     fun loadPopularVideos() {
         viewModelScope.launch {
             runCatching {
