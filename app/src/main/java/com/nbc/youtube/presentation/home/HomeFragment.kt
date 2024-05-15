@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         categorySpinnerBind()
         defaultRecyclerViewBind()
-        getCategoriesItem()
+        observeData()
         itemOnClick()
     }
 
@@ -61,27 +61,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun defaultRecyclerViewBind() {
-        rvMostPopularBind()
-        rvCategoryBind()
-    }
-
-    private fun rvMostPopularBind() {
-        with(binding.rvMostPopular) {
-            adapter = popularVideoAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        }
-        videosViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
-            popularVideoAdapter.listUpdate(data, 1)
-        })
-    }
-    private fun rvCategoryBind() {
         with(binding.rvCategoryVideo) {
             adapter = categoryVideoAdapter
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
-        videosViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
-            categoryVideoAdapter.listUpdate(data, 2)
-        })
+        with(binding.rvMostPopular) {
+            adapter = popularVideoAdapter
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+
     }
 
     private fun categorySpinnerBind() {
@@ -102,12 +90,18 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    private fun getCategoriesItem() {
+    private fun observeData() {
         videosViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
             spinnerAdapter.setCategoryList(data)
         })
+        videosViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
+            categoryVideoAdapter.listUpdate(data, 2)
+        })
+        videosViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
+            popularVideoAdapter.listUpdate(data, 1)
+        })
     }
+
 
     private fun itemOnClick() {
         setItemClick(popularVideoAdapter)
