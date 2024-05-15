@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import com.nbc.youtube.R
+import com.nbc.youtube.databinding.ItemCustomSpinnerBinding
 
 class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
     android.R.layout.simple_spinner_item) {
@@ -35,12 +37,15 @@ class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
     }
 
     private fun createSpinnerView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context)
-            .inflate(android.R.layout.simple_spinner_item, parent, false)
+        val binding: ItemCustomSpinnerBinding = if (convertView == null) {
+            val inflater = LayoutInflater.from(parent.context)
+            ItemCustomSpinnerBinding.inflate(inflater, parent, false)
+        } else {
+            ItemCustomSpinnerBinding.bind(convertView)
+        }
 
-        val textView = view.findViewById<TextView>(android.R.id.text1)
-        textView.text = categoryList[position]
+        binding.tvCategoryItem.text = categoryList[position]
 
-        return view
+        return binding.root
     }
 }
