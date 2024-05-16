@@ -1,6 +1,7 @@
 package com.nbc.youtube.presentation.model
 
 import android.os.Parcelable
+import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -13,12 +14,26 @@ import kotlinx.parcelize.Parcelize
  * @param categoryId 영상의 카테고리 값
  */
 @Parcelize
-data class VideoEntity (
+data class VideoEntity(
     val releaseDate: String,
     val id: String,
     val channelTitle: String,
     val title: String,
     val description: String,
-    val thumbnail: String,
     val categoryId: String,
-): Parcelable
+    val thumbnail: String
+) : Parcelable {
+
+    fun withLikedStatus(liked: Boolean): VideoEntityWithLiked {
+        return VideoEntityWithLiked(
+            releaseDate = releaseDate,
+            id = id,
+            channelTitle = channelTitle,
+            title = title,
+            description = description,
+            thumbnail = thumbnail,
+            categoryId = categoryId,
+            liked = liked,
+        )
+    }
+}

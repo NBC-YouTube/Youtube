@@ -4,24 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nbc.youtube.databinding.FragmentSearchBinding
-import com.nbc.youtube.presentation.my.MyFragmentDirections
-
+import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = _binding!!
-    private val searchViewModel by viewModels<SearchViewModel> {
+    private val viewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory()
     }
 
     private val adapter = SearchAdapter {
-        val action = MyFragmentDirections.actionMyFragmentToDetailFragment(it)
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it) // Type mismatch: inferred type is VideoEntityWithLiked but VideoEntity was expected
         findNavController().navigate(action)
     }
 
@@ -44,18 +42,46 @@ class SearchFragment : Fragment() {
 
         setRecyclerView()
         setObserve()
-    }
-
-    private fun setObserve() {
-        TODO("Not yet implemented")
+        setSearchListeners()
     }
 
     private fun setRecyclerView() {
-        TODO("Not yet implemented")
+        binding.rvSearchVideo.adapter = adapter
+    }
+
+    private fun setObserve() {
+        viewModel.searchVideo.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoEntityWithLiked>(
+            KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
+                if (liked.liked) {
+                    viewModel.addFavoriteVideo(liked)
+                } else {
+                    viewModel.removeFavoriteVideo(liked)
+                }
+        }
+    }
+
+    private fun setSearchListeners() {
+        binding.searchBtn.setOnClickListener {
+            val query = binding.searchText.text.toString()
+            viewModel.loadSearchVideos(query, "moderate")
+        }
+
+        binding.kidsBtn.setOnClickListener {
+            val query = binding.searchText.text.toString()
+            viewModel.loadSearchVideos(query, "strict")
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    companion object {
+        const val KEY_FOR_VIDEO_LIKED = "KEY_FOR_VIDEO_LIKED"
     }
 }
