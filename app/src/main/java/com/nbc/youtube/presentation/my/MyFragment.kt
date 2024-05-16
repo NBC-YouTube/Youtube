@@ -9,8 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nbc.youtube.databinding.FragmentMyBinding
+import com.nbc.youtube.presentation.detail.DetailFragment
 import com.nbc.youtube.presentation.model.UserInfo
-import com.nbc.youtube.presentation.model.VideoEntity
 
 
 class MyFragment : Fragment() {
@@ -23,6 +23,7 @@ class MyFragment : Fragment() {
     }
 
     private val adapter = MyAdapter {
+        viewModel.updateClickedItem(it)
         val action = MyFragmentDirections.actionMyFragmentToDetailFragment(it)
         findNavController().navigate(action)
     }
@@ -68,8 +69,12 @@ class MyFragment : Fragment() {
         viewModel.favoriteVideos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoEntity>(KEY_FOR_VIDEO_ENTITY_DISLIKED)?.observe(viewLifecycleOwner) { video ->
-            viewModel.removeFavoriteVideo(video)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            DetailFragment.KEY_FOR_VIDEO_ENTITY_DISLIKED
+        )?.observe(viewLifecycleOwner) { liked ->
+            if (!liked) {
+                viewModel.removeFavoriteVideo()
+            }
         }
     }
 
@@ -84,9 +89,5 @@ class MyFragment : Fragment() {
 
         binding.tvChannelName.text = userInfo.name
         binding.tvDescription.text = userInfo.introduction
-    }
-
-    companion object {
-        const val KEY_FOR_VIDEO_ENTITY_DISLIKED = "KEY_FOR_VIDEO_ENTITY_DISLIKED"
     }
 }

@@ -21,6 +21,8 @@ class MyViewModel(
     val favoriteVideos: LiveData<List<VideoEntity>>
         get() = _favoriteVideos
 
+    private var clickedVideo: VideoEntity? = null
+
     fun loadUserInfo() {
         viewModelScope.launch {
             runCatching {
@@ -34,13 +36,16 @@ class MyViewModel(
         }
     }
 
-    fun removeFavoriteVideo(video: VideoEntity) {
-        viewModelScope.launch {
-            repository.removeFavoriteVideo(video)
-        }
+    fun removeFavoriteVideo() {
+        val video = clickedVideo ?: return
         val videos = _favoriteVideos.value?.toMutableList() ?: return
 
         videos.remove(video)
         _favoriteVideos.value = videos
+        clickedVideo = null
+    }
+
+    fun updateClickedItem(videoEntity: VideoEntity) {
+        clickedVideo = videoEntity
     }
 }
