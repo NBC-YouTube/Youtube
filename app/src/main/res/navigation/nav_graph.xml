@@ -31,9 +31,6 @@
         <argument
             android:name="videoInfo"
             app:argType="com.nbc.youtube.presentation.model.VideoEntity" />
-        <action
-            android:id="@+id/action_detailFragment_to_myFragment"
-            app:destination="@id/myFragment" />
     </fragment>
     <fragment
         android:id="@+id/myFragment"
