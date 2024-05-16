@@ -2,10 +2,13 @@ package com.nbc.youtube.presentation.home.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.nbc.youtube.R
 import com.nbc.youtube.databinding.ItemHomeCategoryBinding
 import com.nbc.youtube.databinding.ItemHomeMostPopularBinding
 import com.nbc.youtube.presentation.model.VideoEntity
@@ -24,11 +27,11 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when(viewType) {
             1 -> {
                 val binding = ItemHomeMostPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                PopularHolder(binding)
+                Holder(binding)
             }
             2 -> {
                 val binding = ItemHomeCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                CategoryHolder(binding)
+                Holder(binding)
             }
             else -> throw IllegalArgumentException("Unknown View Type")
         }
@@ -47,35 +50,16 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         holder.itemView.setOnClickListener {
             itemClick?.onClick(currentItem)
         }
-        when(holder.itemViewType) {
-            1 -> {
-                (holder as PopularHolder).bind(currentItem)
-            }
-            2 -> {
-                (holder as CategoryHolder).bind(currentItem)
-            }
-        }
+        (holder as Holder).bind(currentItem)
     }
 
-    class PopularHolder(private val binding: ItemHomeMostPopularBinding): RecyclerView.ViewHolder(binding.root) {
-
+    class Holder(private val binding: ViewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: VideoEntity) {
             Glide.with(binding.root)
                 .load(item.thumbnail)
                 .apply(RequestOptions().centerCrop().transform(RoundedCorners(25)))
-                .into(binding.ivThumbnail)
-            binding.tvTitle.text = item.title
-        }
-    }
-
-    class CategoryHolder(private val binding: ItemHomeCategoryBinding): RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: VideoEntity) {
-            Glide.with(binding.root)
-                .load(item.thumbnail)
-                .apply(RequestOptions().centerCrop().transform(RoundedCorners(25)))
-                .into(binding.ivCategoryThumbnail)
-            binding.tvCategoryTitle.text = item.title
+                .into(binding.root.findViewById(R.id.iv_thumbnail))
+            binding.root.findViewById<TextView>(R.id.tv_title).text = item.title
         }
     }
 
