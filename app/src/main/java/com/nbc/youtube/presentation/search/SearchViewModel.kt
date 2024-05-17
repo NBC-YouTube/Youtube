@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
+import com.nbc.youtube.presentation.model.VideoEntity
 import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
 import kotlinx.coroutines.launch
 
@@ -15,24 +16,31 @@ class SearchViewModel(
     val searchVideo: LiveData<List<VideoEntityWithLiked>>
         get() = _searchVideos
 
+    private fun mapToVideoEntityWithLiked(
+        videos: List<VideoEntityWithLiked>,
+        favorites: List<VideoEntity>
+    ): List<VideoEntityWithLiked> {
+        return videos.map { video ->
+            val liked = favorites.any { it.id == video.id }
+            VideoEntityWithLiked(
+                releaseDate = video.releaseDate,
+                id = video.id,
+                channelTitle = video.channelTitle,
+                title = video.title,
+                description = video.description,
+                thumbnail = video.thumbnail,
+                categoryId = video.categoryId,
+                liked = liked
+            )
+        }
+    }
+
     fun loadSearchVideos(query: String, safeSearchType: String) {
         viewModelScope.launch {
             runCatching {
                 val videos = repository.getSearchVideo(query, safeSearchType)
                 val favorites = repository.getFavoriteVideos()
-                _searchVideos.value = videos.map {video ->
-                    val liked = favorites.any { it.id == video.id }
-                    VideoEntityWithLiked(
-                        releaseDate = video.releaseDate,
-                        id = video.id,
-                        channelTitle = video.channelTitle,
-                        title = video.title,
-                        description = video.description,
-                        thumbnail = video.thumbnail,
-                        categoryId = video.categoryId,
-                        liked = liked
-                    )
-                }
+                _searchVideos.value = mapToVideoEntityWithLiked(videos, favorites)
             }
 
         }

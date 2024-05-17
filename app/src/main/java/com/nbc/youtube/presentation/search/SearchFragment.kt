@@ -23,11 +23,6 @@ class SearchFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // lateinit 사용 시 초기화
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
