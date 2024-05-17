@@ -12,11 +12,8 @@ class SearchViewModel(
     private val repository: YoutubeRepository
 ) : ViewModel() {
     private val _searchVideos = MutableLiveData<List<VideoEntityWithLiked>>()
-    private val _clickedVideos = MutableLiveData<VideoEntityWithLiked>()
     val searchVideo: LiveData<List<VideoEntityWithLiked>>
         get() = _searchVideos
-    val clickedVideo: LiveData<VideoEntityWithLiked>
-        get() = _clickedVideos
 
     fun loadSearchVideos(query: String, safeSearchType: String) {
         viewModelScope.launch {
@@ -33,7 +30,7 @@ class SearchViewModel(
                         "123",
                         "https://i.ytimg.com/vi/N9nsgoWuRoE/default.jpg",
                         "123",
-                        true
+                        liked
                     )
                 }
             }
@@ -52,8 +49,4 @@ class SearchViewModel(
         videos.remove(video)
         _searchVideos.value = videos
     }
-
-//    fun updateClickedItem(videoEntity: VideoEntityWithLiked) {
-//        clickedVideo = videoEntity
-//    }
 }

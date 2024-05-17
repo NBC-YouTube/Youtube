@@ -19,7 +19,7 @@ class SearchFragment : Fragment() {
     }
 
     private val adapter = SearchAdapter {
-        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it) // Type mismatch: inferred type is VideoEntityWithLiked but VideoEntity was expected
+        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoEntity())
         findNavController().navigate(action)
     }
 
