@@ -11,8 +11,10 @@ import com.nbc.youtube.presentation.my.MyViewModel
 
 class AppContainer(context: Context) {
 
+    private val applicationScope = CoroutineScope(SupervisorJob())
+
     private val db: AppDatabase by lazy {
-        AppDatabase.getInstance(context)
+        AppDatabase.getInstance(context, applicationScope)
     }
 
     fun provideVideoEntityDao(): VideoEntityDao {

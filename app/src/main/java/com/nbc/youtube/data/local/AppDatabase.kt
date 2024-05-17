@@ -7,35 +7,37 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.nbc.youtube.data.local.model.UserEntity
-import com.nbc.youtube.presentation.model.UserInfo
-import com.nbc.youtube.presentation.model.VideoInfo
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.Executors
+import com.nbc.youtube.data.local.model.VideoEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-@Database(entities = [VideoInfo::class, UserInfo::class], version = 1)
+@Database(entities = [VideoEntity::class, UserEntity::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun videoEntityDao(): VideoEntityDao
     abstract fun userEntityDao(): UserEntityDao
 
+    class AppDatabaseCallback(
+        private val scope: CoroutineScope,
+    ): RoomDatabase.Callback() {
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            INSTNACE?.let { appDatabase ->
+                scope.launch {
+                    appDatabase.userEntityDao().addUserEntity(UserEntity.userEntity)
+                }
+            }
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTNACE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context, scope: CoroutineScope): AppDatabase {
             return INSTNACE ?: synchronized(this) {
                 val instance = INSTNACE ?: Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube")
-                    .addCallback(object: Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-
-                            Executors.newSingleThreadExecutor().execute {
-                                runBlocking {
-                                    getInstance(context).userEntityDao().addUserEntity(UserEntity.userEntity)
-                                }
-                            }
-                        }
-                    })
+                    .addCallback(AppDatabaseCallback(scope))
                     .build()
                 INSTNACE = instance
                 instance
