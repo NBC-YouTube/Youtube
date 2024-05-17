@@ -40,11 +40,11 @@ class DetailViewModel(
         _isLiked.value = liked
 
         viewModelScope.launch {
-           if (liked) {
-               repository.addFavoriteVideo(videoInfo)
-           } else {
-               repository.removeFavoriteVideo(videoInfo)
-           }
+            if (liked) {
+                repository.addFavoriteVideo(videoInfo)
+            } else {
+                repository.removeFavoriteVideo(videoInfo)
+            }
         }
     }
 

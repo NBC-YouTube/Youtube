@@ -65,7 +65,8 @@ class DetailFragment : Fragment() {
             binding.tvDescription.text = it.description
         }
         viewModel.isLiked.observe(viewLifecycleOwner) { isLiked ->
-            binding.btnLike.text = if (isLiked) getString(R.string.dislike) else getString(R.string.like)
+            binding.btnLike.text =
+                if (isLiked) getString(R.string.dislike) else getString(R.string.like)
         }
         viewModel.finalLiked.observe(viewLifecycleOwner) { isLiked ->
             val navController = findNavController()
@@ -82,8 +83,10 @@ class DetailFragment : Fragment() {
             viewModel.updateLiked()
         }
         binding.btnShare.setOnClickListener {
-            Toast.makeText(requireContext(),
-                getString(R.string.not_implemented_yet), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.not_implemented_yet), Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
