@@ -19,19 +19,28 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun userEntityDao(): UserEntityDao
 
     companion object {
-        fun getInstance(context: Context): AppDatabase =
-            Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube")
-                .addCallback(object: Callback() {
-                    override fun onCreate(db: SupportSQLiteDatabase) {
-                        super.onCreate(db)
+        @Volatile
+        private var INSTNACE: AppDatabase? = null
 
-                        Executors.newSingleThreadExecutor().execute {
-                            runBlocking {
-                                getInstance(context).userEntityDao().addUserEntity(UserEntity.userEntity)
+        fun getInstance(context: Context): AppDatabase {
+            return INSTNACE ?: synchronized(this) {
+                val instance = INSTNACE ?: Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube")
+                    .addCallback(object: Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+
+                            Executors.newSingleThreadExecutor().execute {
+                                runBlocking {
+                                    getInstance(context).userEntityDao().addUserEntity(UserEntity.userEntity)
+                                }
                             }
                         }
-                    }
-                })
-                .build()
+                    })
+                    .build()
+                INSTNACE = instance
+                instance
+            }
+        }
+
     }
 }
