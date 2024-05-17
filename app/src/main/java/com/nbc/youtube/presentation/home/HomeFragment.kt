@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nbc.youtube.databinding.FragmentHomeBinding
@@ -98,15 +97,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeData() {
-        homeViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
+        homeViewModel.categories.observe(viewLifecycleOwner) { data ->
             spinnerAdapter.setCategoryList(data)
-        })
-        homeViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
+        }
+        homeViewModel.categoryVideos.observe(viewLifecycleOwner) { data ->
             categoryVideoAdapter.listUpdate(data, 2)
-        })
-        homeViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
+        }
+        homeViewModel.popularVideos.observe(viewLifecycleOwner) { data ->
             popularVideoAdapter.listUpdate(data, 1)
-        })
+        }
     }
 
 
