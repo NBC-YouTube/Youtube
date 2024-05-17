@@ -64,8 +64,8 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit)
-    implementation(libs.gson)
-    implementation(libs.converter.gson)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
 
     // glide
     implementation(libs.glide)
