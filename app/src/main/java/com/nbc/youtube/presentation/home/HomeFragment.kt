@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = spinnerAdapter.getItem(position)
-                homeViewModel.loadCategoryVideos(selectedItem)
+                homeViewModel.loadCategoryVideos(selectedItem, position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

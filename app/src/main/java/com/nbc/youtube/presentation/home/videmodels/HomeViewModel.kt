@@ -18,6 +18,9 @@ class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
 
     private val _categories = MutableLiveData<List<CategoryInfo>>()
     val categories: LiveData<List<CategoryInfo>> get() = _categories
+
+    private var position = -1
+
     fun loadCategories() {
         viewModelScope.launch {
             _categories.value = repository.getCategories()
@@ -33,13 +36,15 @@ class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
         }
     }
 
-    fun loadCategoryVideos(category: CategoryInfo) {
+    fun loadCategoryVideos(category: CategoryInfo, position: Int) {
+        if (this.position == position) {
+            return
+        }
+        this.position = position
         viewModelScope.launch {
             runCatching {
                 val videos = repository.getCategoryVideos(category.id)
                 _categoryVideos.value = videos
-            }.onFailure {
-                throw it
             }
         }
     }
