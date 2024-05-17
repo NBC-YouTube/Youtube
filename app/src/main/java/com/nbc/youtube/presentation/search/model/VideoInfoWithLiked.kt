@@ -1,8 +1,8 @@
 package com.nbc.youtube.presentation.search.model
 
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 
-data class VideoEntityWithLiked(
+data class VideoInfoWithLiked(
     val releaseDate: String,
     val id: String,
     val channelTitle: String,
@@ -12,8 +12,8 @@ data class VideoEntityWithLiked(
     val categoryId: String,
     val liked: Boolean,
 ) {
-    fun likedToVideoEntity() : VideoEntity {
-        return VideoEntity(
+    fun likedToVideoEntity() : VideoInfo {
+        return VideoInfo(
             releaseDate = releaseDate,
             id = id,
             channelTitle = channelTitle,

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
 import com.nbc.youtube.presentation.model.UserInfo
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 import kotlinx.coroutines.launch
 
 class MyViewModel(
@@ -17,11 +17,11 @@ class MyViewModel(
     val userInfo: LiveData<UserInfo>
         get() = _userInfo
 
-    private val _favoriteVideos = MutableLiveData<List<VideoEntity>>()
-    val favoriteVideos: LiveData<List<VideoEntity>>
+    private val _favoriteVideos = MutableLiveData<List<VideoInfo>>()
+    val favoriteVideos: LiveData<List<VideoInfo>>
         get() = _favoriteVideos
 
-    private var clickedVideo: VideoEntity? = null
+    private var clickedVideo: VideoInfo? = null
 
     fun loadUserInfo() {
         viewModelScope.launch {
@@ -45,7 +45,7 @@ class MyViewModel(
         clickedVideo = null
     }
 
-    fun updateClickedItem(videoEntity: VideoEntity) {
-        clickedVideo = videoEntity
+    fun updateClickedItem(videoInfo: VideoInfo) {
+        clickedVideo = videoInfo
     }
 }

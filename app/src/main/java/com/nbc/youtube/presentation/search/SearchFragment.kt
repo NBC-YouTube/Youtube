@@ -1,5 +1,7 @@
 package com.nbc.youtube.presentation.search
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nbc.youtube.databinding.FragmentSearchBinding
-import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
@@ -17,11 +19,17 @@ class SearchFragment : Fragment() {
     private val viewModel by viewModels<SearchViewModel> {
         SearchViewModelFactory()
     }
+    private var baseButtonColor: ColorStateList? = null
 
-    private val adapter = SearchAdapter {
-        val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoEntity())
-        findNavController().navigate(action)
-    }
+    private val adapter = SearchAdapter (
+        onClick = {
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoEntity())
+            findNavController().navigate(action)
+        },
+        likeClick = { videoEntityWithLiked ->
+            viewModel.addFavoriteVideo(videoEntityWithLiked)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +56,7 @@ class SearchFragment : Fragment() {
             adapter.submitList(it)
         }
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoEntityWithLiked>(
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoInfoWithLiked>(
             KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
                 if (liked.liked) {
                     viewModel.addFavoriteVideo(liked)
@@ -59,14 +67,22 @@ class SearchFragment : Fragment() {
     }
 
     private fun setSearchListeners() {
+        baseButtonColor = binding.kidsBtn.backgroundTintList
+
         binding.searchBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
             viewModel.loadSearchVideos(query, "moderate")
+
+            baseButtonColor?.let { color ->
+                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
+            }
         }
 
         binding.kidsBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
             viewModel.loadSearchVideos(query, "strict")
+
+            binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#ACACAC"))
         }
     }
 

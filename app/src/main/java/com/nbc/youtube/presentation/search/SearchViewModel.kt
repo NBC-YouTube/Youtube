@@ -5,24 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
-import com.nbc.youtube.presentation.model.VideoEntity
-import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
+import com.nbc.youtube.presentation.model.VideoInfo
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val repository: YoutubeRepository
 ) : ViewModel() {
-    private val _searchVideos = MutableLiveData<List<VideoEntityWithLiked>>()
-    val searchVideo: LiveData<List<VideoEntityWithLiked>>
+    private val _searchVideos = MutableLiveData<List<VideoInfoWithLiked>>()
+    val searchVideo: LiveData<List<VideoInfoWithLiked>>
         get() = _searchVideos
 
     private fun mapToVideoEntityWithLiked(
-        videos: List<VideoEntityWithLiked>,
-        favorites: List<VideoEntity>
-    ): List<VideoEntityWithLiked> {
+        videos: List<VideoInfoWithLiked>,
+        favorites: List<VideoInfo>
+    ): List<VideoInfoWithLiked> {
         return videos.map { video ->
             val liked = favorites.any { it.id == video.id }
-            VideoEntityWithLiked(
+            VideoInfoWithLiked(
                 releaseDate = video.releaseDate,
                 id = video.id,
                 channelTitle = video.channelTitle,
@@ -46,13 +46,13 @@ class SearchViewModel(
         }
     }
 
-    fun addFavoriteVideo(video: VideoEntityWithLiked) {
+    fun addFavoriteVideo(video: VideoInfoWithLiked) {
         val videos = _searchVideos.value?.toMutableList() ?: return
         videos.add(video)
         _searchVideos.value = videos
     }
 
-    fun removeFavoriteVideo(video: VideoEntityWithLiked) {
+    fun removeFavoriteVideo(video: VideoInfoWithLiked) {
         val videos = _searchVideos.value?.toMutableList() ?: return
         videos.remove(video)
         _searchVideos.value = videos

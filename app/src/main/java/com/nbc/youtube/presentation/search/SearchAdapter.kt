@@ -1,5 +1,6 @@
 package com.nbc.youtube.presentation.search
 
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -8,21 +9,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nbc.youtube.R
 import com.nbc.youtube.databinding.SearchItemBinding
-import com.nbc.youtube.presentation.search.model.VideoEntityWithLiked
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 class SearchAdapter(
-    private val onClick: (VideoEntityWithLiked) -> Unit,
-) : ListAdapter<VideoEntityWithLiked, SearchAdapter.ViewHolder>(diff) {
+    private val onClick: (VideoInfoWithLiked) -> Unit,
+    private val likeClick: (VideoInfoWithLiked) -> Unit,
+) : ListAdapter<VideoInfoWithLiked, SearchAdapter.ViewHolder>(diff) {
 
     class ViewHolder(
         private val binding: SearchItemBinding,
-        private val onClick: (VideoEntityWithLiked) -> Unit,
+        private val onClick: (VideoInfoWithLiked) -> Unit,
+        private val likeClick: (VideoInfoWithLiked) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var item: VideoEntityWithLiked
+        private lateinit var item: VideoInfoWithLiked
 
         init {
             binding.root.setOnClickListener {
@@ -31,16 +34,20 @@ class SearchAdapter(
 
             binding.searchLikeBtn.setOnClickListener {
                 item = item.copy(liked = !item.liked)
-                val imageResource =
-                    if (item.liked) R.drawable.ic_thumb_fill else R.drawable.ic_thumb_empty
-                Glide.with(binding.root.context)
-                    .load(imageResource)
-                    .into(binding.searchLikeBtn)
-                onClick(item)
+                updateLikeButton()
+                likeClick(item)
             }
         }
 
-        fun bind(videoEntity: VideoEntityWithLiked) {
+        private fun updateLikeButton() {
+            val imageResource =
+                if (item.liked) R.drawable.ic_thumb_fill else R.drawable.ic_thumb_empty
+            Glide.with(binding.root.context)
+                .load(imageResource)
+                .into(binding.searchLikeBtn)
+        }
+
+        fun bind(videoEntity: VideoInfoWithLiked) {
             item = videoEntity
 
             Glide.with(binding.root.context)
@@ -58,7 +65,6 @@ class SearchAdapter(
             }
 
             binding.searchReleaseDate.text = formattedDate
-
         }
     }
 
@@ -66,6 +72,7 @@ class SearchAdapter(
         return ViewHolder(
             SearchItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             onClick,
+            likeClick
         )
     }
 
@@ -74,17 +81,17 @@ class SearchAdapter(
     }
 
     companion object {
-        val diff = object : DiffUtil.ItemCallback<VideoEntityWithLiked>() {
+        val diff = object : DiffUtil.ItemCallback<VideoInfoWithLiked>() {
             override fun areItemsTheSame(
-                oldItem: VideoEntityWithLiked,
-                newItem: VideoEntityWithLiked
+                oldItem: VideoInfoWithLiked,
+                newItem: VideoInfoWithLiked
             ): Boolean {
                 return oldItem.thumbnail == newItem.thumbnail
             }
 
             override fun areContentsTheSame(
-                oldItem: VideoEntityWithLiked,
-                newItem: VideoEntityWithLiked
+                oldItem: VideoInfoWithLiked,
+                newItem: VideoInfoWithLiked
             ): Boolean {
                 return oldItem == newItem
             }
