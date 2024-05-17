@@ -9,13 +9,12 @@ interface YoutubeService {
 
     @GET("search")
     suspend fun getSearchVideo(
-        @Query("part") part: String,
-        @Query("order") order: String, // 정렬 순서
+        @Query("part") part: String = "snippet",
         @Query("q") query: String, // 검색
-        @Query("type") type: String, // 검색할 리소스 타입
+        @Query("type") type: String = "video", // 검색할 리소스 타입
         @Query("safeSearch") safeSearch: String, // 안전 검색어
-        @Query("maxResults") maxResults: Int = 20
-    ): YoutubeResponse<String>
+        @Query("maxResults") maxResults: Int = 30
+    ): YoutubeResponse<Id>
 
     @GET("videos")
     suspend fun getPopularVideos(

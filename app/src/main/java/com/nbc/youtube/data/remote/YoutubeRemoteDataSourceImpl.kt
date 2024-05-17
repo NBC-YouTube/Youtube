@@ -45,7 +45,21 @@ class YoutubeRemoteDataSourceImpl(
         } ?: emptyList()
     }
 
-    override fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity> {
-        return emptyList()
+    override suspend fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity> {
+        return youtubeService.getSearchVideo(
+            query = query,
+            safeSearch = safeSearchType
+        ).items?.map {
+            VideoEntity(
+                releaseDate = it.snippet?.publishedAt.orEmpty(),
+                id = it.id?.videoId.orEmpty(),
+                channelTitle = it.snippet?.channelTitle.orEmpty(),
+                title = it.snippet?.title.orEmpty(),
+                description = it.snippet?.description.orEmpty(),
+                thumbnail = it.snippet?.thumbnails?.maxres?.url
+                    ?: it.snippet?.thumbnails?.default?.url.orEmpty(),
+                categoryId = it.snippet?.categoryId.orEmpty(),
+            )
+        } ?: emptyList()
     }
 }

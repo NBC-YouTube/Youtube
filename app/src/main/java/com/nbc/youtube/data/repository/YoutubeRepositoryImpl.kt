@@ -35,7 +35,7 @@ class YoutubeRepositoryImpl(
         }
     }
 
-    override fun getSearchVideo(query: String, safeSearchType: String): List<VideoInfo> {
+    override suspend fun getSearchVideo(query: String, safeSearchType: String): List<VideoInfo> {
         return youtubeRemoteDataSource.getSearchVideo(query, safeSearchType).map {
             it.toPresentation()
         }

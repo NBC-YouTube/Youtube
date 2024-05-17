@@ -7,6 +7,6 @@ interface YoutubeRemoteDataSource {
     suspend fun getPopularVideos(): List<VideoEntity>
     suspend fun getCategories(): List<CategoryEntity>
     suspend fun getCategoryVideos(categoryId: String): List<VideoEntity>
-    fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity>
+    suspend fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity>
 
 }
