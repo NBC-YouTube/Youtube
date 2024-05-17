@@ -5,15 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 import kotlinx.coroutines.launch
 
 class VideosViewModel(private val repository: YoutubeRepository) : ViewModel() {
-    private val _popularVideos = MutableLiveData<List<VideoEntity>>()
-    val popularVideos : LiveData<List<VideoEntity>> get() = _popularVideos
+    private val _popularVideos = MutableLiveData<List<VideoInfo>>()
+    val popularVideos : LiveData<List<VideoInfo>> get() = _popularVideos
 
-    private val _categoryVideos = MutableLiveData<List<VideoEntity>>()
-    val categoryVideos : LiveData<List<VideoEntity>> get() = _categoryVideos
+    private val _categoryVideos = MutableLiveData<List<VideoInfo>>()
+    val categoryVideos : LiveData<List<VideoInfo>> get() = _categoryVideos
 
     private val _categories = MutableLiveData<List<String>>()
     val categories : LiveData<List<String>> get() =_categories

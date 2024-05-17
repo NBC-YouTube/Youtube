@@ -15,7 +15,7 @@ import kotlinx.parcelize.Parcelize
  * @param categoryId 영상의 카테고리 값
  */
 @Parcelize
-data class VideoEntity (
+data class VideoInfo (
     val releaseDate: String,
     val id: String,
     val channelTitle: String,

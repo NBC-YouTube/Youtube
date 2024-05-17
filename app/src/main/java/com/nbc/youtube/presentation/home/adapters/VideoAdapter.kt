@@ -11,14 +11,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.nbc.youtube.R
 import com.nbc.youtube.databinding.ItemHomeCategoryBinding
 import com.nbc.youtube.databinding.ItemHomeMostPopularBinding
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 
 class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var itemList = listOf<VideoEntity>()
+    private var itemList = listOf<VideoInfo>()
     private var videoType: Int = 1
 
     interface ItemClick {
-        fun onClick(item: VideoEntity)
+        fun onClick(item: VideoInfo)
     }
 
     var itemClick: ItemClick? = null
@@ -54,7 +54,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class Holder(private val binding: ViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: VideoEntity) {
+        fun bind(item: VideoInfo) {
             Glide.with(binding.root)
                 .load(item.thumbnail)
                 .apply(RequestOptions().centerCrop().transform(RoundedCorners(25)))
@@ -63,7 +63,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun listUpdate(item: List<VideoEntity>, viewType: Int) {
+    fun listUpdate(item: List<VideoInfo>, viewType: Int) {
         this.itemList = item
         this.videoType = viewType
         notifyDataSetChanged()
