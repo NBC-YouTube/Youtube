@@ -10,8 +10,8 @@ interface YoutubeRepository {
     fun getCategoryVideos(category: String): List<VideoInfo>
     suspend fun getFavoriteVideos(): List<VideoInfo>
     fun getSearchVideo(query: String, safeSearchType: String):List<VideoInfo>
-    fun addFavoriteVideo(video: VideoInfo)
-    fun removeFavoriteVideo(video: VideoInfo)
+    suspend fun addFavoriteVideo(video: VideoInfo)
+    suspend fun removeFavoriteVideo(video: VideoInfo)
 
     fun getUserInfo(): UserInfo
 }

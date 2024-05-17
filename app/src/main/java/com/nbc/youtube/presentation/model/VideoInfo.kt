@@ -1,6 +1,7 @@
 package com.nbc.youtube.presentation.model
 
 import android.os.Parcelable
+import com.nbc.youtube.data.local.model.VideoEntity
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -23,4 +24,15 @@ data class VideoInfo (
     val description: String,
     val thumbnail: String,
     val categoryId: String,
-): Parcelable
+): Parcelable {
+
+    fun toEntity(): VideoEntity = VideoEntity(
+        releaseDate = releaseDate,
+        id = id,
+        channelTitle = channelTitle,
+        title = title,
+        description = description,
+        thumbnail = thumbnail,
+        categoryId = categoryId
+    )
+}
