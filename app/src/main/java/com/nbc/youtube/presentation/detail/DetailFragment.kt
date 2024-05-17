@@ -28,6 +28,6 @@ class DetailFragment : Fragment() {
     }
 
     companion object {
-        const val BUNDLE_KEY_FOR_DETAIL = "BUNDLE_KEY_FOR_DETAIL"
+        const val KEY_FOR_VIDEO_LIKED = "KEY_FOR_VIDEO_LIKED"
     }
 }

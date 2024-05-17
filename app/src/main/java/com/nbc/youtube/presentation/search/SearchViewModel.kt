@@ -20,17 +20,17 @@ class SearchViewModel(
             runCatching {
                 val videos = repository.getSearchVideo(query, safeSearchType)
                 val favorites = repository.getFavoriteVideos()
-                _searchVideos.value = videos.map {
-                    val liked = it in favorites
+                _searchVideos.value = videos.map {video ->
+                    val liked = favorites.any { it.id == video.id }
                     VideoEntityWithLiked(
-                        "2024-04-28T09:30:06Z",
-                        "1",
-                        "123",
-                        "123",
-                        "123",
-                        "https://i.ytimg.com/vi/N9nsgoWuRoE/default.jpg",
-                        "123",
-                        liked
+                        releaseDate = video.releaseDate,
+                        id = video.id,
+                        channelTitle = video.channelTitle,
+                        title = video.title,
+                        description = video.description,
+                        thumbnail = video.thumbnail,
+                        categoryId = video.categoryId,
+                        liked = liked
                     )
                 }
             }
