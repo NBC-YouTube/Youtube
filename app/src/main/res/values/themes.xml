@@ -21,4 +21,10 @@
     <style name="Theme.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/transparent</item>
     </style>
+
+    <style name="detailButtonStyle" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/logoColor</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

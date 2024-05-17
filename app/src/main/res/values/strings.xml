@@ -7,4 +7,10 @@
     <string name="detail">Detail</string>
     <string name="sample_descrption">Discover the latest Pokémon news, animations, and gameplay on the official Pokémon YouTube channel. Dive into the captivating world of Pokémon and experience everything it has to offer right here! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! </string>
     <string name="my_favorite_video_header">My Videos</string>
+    <string name="detail_header_text">Video Detail</string>
+    <string name="share">공유하기</string>
+    <string name="detail_description">영상 설명</string>
+    <string name="like">좋아요</string>
+    <string name="dislike">좋아요 취소</string>
+    <string name="not_implemented_yet">아직 구현되지 않았습니다.</string>
 </resources>
