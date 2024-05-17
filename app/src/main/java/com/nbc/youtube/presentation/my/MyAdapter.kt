@@ -9,6 +9,9 @@ import com.bumptech.glide.Glide
 import com.nbc.youtube.R
 import com.nbc.youtube.databinding.ItemFavoriteVideoBinding
 import com.nbc.youtube.presentation.model.VideoInfo
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class MyAdapter(
     private val onClick: (VideoInfo) -> Unit,
@@ -21,6 +24,8 @@ class MyAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var item: VideoInfo
+        private val outputFormat = DateTimeFormatter.ofPattern("yyyy.MM.dd", Locale.KOREA)
+
 
         init {
             binding.root.setOnClickListener {
@@ -37,7 +42,14 @@ class MyAdapter(
                 .into(binding.ivThumbnail)
             binding.tvChannelName.text = videoInfo.channelTitle
             binding.tvTitle.text = videoInfo.title
-            binding.tvReleaseDate.text = videoInfo.releaseDate
+            
+            val releaseDateTime = parseReleaseDate(videoInfo.releaseDate)
+            binding.tvReleaseDate.text = releaseDateTime
+        }
+
+        private fun parseReleaseDate(date: String): String {
+            val dateTime = LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME)
+            return dateTime.format(outputFormat)
         }
     }
 
