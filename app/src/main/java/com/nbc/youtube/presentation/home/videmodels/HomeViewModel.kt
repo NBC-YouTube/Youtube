@@ -8,7 +8,7 @@ import com.nbc.youtube.data.repository.YoutubeRepository
 import com.nbc.youtube.presentation.model.VideoInfo
 import kotlinx.coroutines.launch
 
-class VideosViewModel(private val repository: YoutubeRepository) : ViewModel() {
+class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
     private val _popularVideos = MutableLiveData<List<VideoInfo>>()
     val popularVideos : LiveData<List<VideoInfo>> get() = _popularVideos
 

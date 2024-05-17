@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nbc.youtube.databinding.FragmentHomeBinding
 import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
-import com.nbc.youtube.presentation.home.videmodels.VideosViewModel
+import com.nbc.youtube.presentation.home.videmodels.HomeViewModel
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
 import com.nbc.youtube.presentation.model.VideoInfo
 
@@ -26,15 +26,15 @@ class HomeFragment : Fragment() {
         get() = _binding!!
     private val popularVideoAdapter by lazy { VideoAdapter() }
     private val categoryVideoAdapter by lazy { VideoAdapter() }
-    private val videosViewModel by viewModels<VideosViewModel> {
+    private val homeViewModel by viewModels<HomeViewModel> {
         VideosViewModelFactory()
     }
     private val spinnerAdapter by lazy { CategorySpinnerAdapter(requireContext()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        videosViewModel.loadPopularVideos()
-        videosViewModel.loadCategories()
+        homeViewModel.loadPopularVideos()
+        homeViewModel.loadCategories()
     }
 
     override fun onCreateView(
@@ -83,7 +83,7 @@ class HomeFragment : Fragment() {
                 id: Long
             ) {
                 val selectedItem = spinnerAdapter.getItem(position)
-                videosViewModel.loadCategoryVideos(selectedItem)
+                homeViewModel.loadCategoryVideos(selectedItem)
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -91,13 +91,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeData() {
-        videosViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
+        homeViewModel.categories.observe(viewLifecycleOwner, Observer { data ->
             spinnerAdapter.setCategoryList(data)
         })
-        videosViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
+        homeViewModel.categoryVideos.observe(viewLifecycleOwner, Observer { data ->
             categoryVideoAdapter.listUpdate(data, 2)
         })
-        videosViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
+        homeViewModel.popularVideos.observe(viewLifecycleOwner, Observer { data ->
             popularVideoAdapter.listUpdate(data, 1)
         })
     }
