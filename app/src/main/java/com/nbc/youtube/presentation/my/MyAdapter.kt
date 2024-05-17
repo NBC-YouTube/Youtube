@@ -42,7 +42,7 @@ class MyAdapter(
                 .into(binding.ivThumbnail)
             binding.tvChannelName.text = videoInfo.channelTitle
             binding.tvTitle.text = videoInfo.title
-            
+
             val releaseDateTime = parseReleaseDate(videoInfo.releaseDate)
             binding.tvReleaseDate.text = releaseDateTime
         }
