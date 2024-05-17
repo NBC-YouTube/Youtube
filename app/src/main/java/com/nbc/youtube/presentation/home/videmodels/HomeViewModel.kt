@@ -38,6 +38,8 @@ class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
             runCatching {
                 val videos = repository.getCategoryVideos(category.id)
                 _categoryVideos.value = videos
+            }.onFailure {
+                throw it
             }
         }
     }

@@ -23,8 +23,8 @@ class YoutubeRepositoryImpl(
         return youtubeRemoteDataSource.getCategories().map { it.toPresentation() }
     }
 
-    override fun getCategoryVideos(category: String): List<VideoInfo> {
-        return youtubeRemoteDataSource.getCategoryVideos(category).map {
+    override suspend fun getCategoryVideos(categoryId: String): List<VideoInfo> {
+        return youtubeRemoteDataSource.getCategoryVideos(categoryId).map {
             it.toPresentation()
         }
     }

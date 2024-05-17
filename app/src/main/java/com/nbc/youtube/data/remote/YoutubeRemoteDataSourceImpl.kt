@@ -14,7 +14,8 @@ class YoutubeRemoteDataSourceImpl(
                 channelTitle = it.snippet?.channelTitle.orEmpty(),
                 title = it.snippet?.title.orEmpty(),
                 description = it.snippet?.description.orEmpty(),
-                thumbnail = it.snippet?.thumbnails?.maxres?.url.orEmpty(),
+                thumbnail = it.snippet?.thumbnails?.maxres?.url
+                    ?: it.snippet?.thumbnails?.default?.url.orEmpty(),
                 categoryId = it.snippet?.categoryId.orEmpty(),
             )
         } ?: emptyList()
@@ -24,13 +25,24 @@ class YoutubeRemoteDataSourceImpl(
         return youtubeService.getCategories().items?.map {
             CategoryEntity(
                 it.snippet?.title.orEmpty(),
-                it.snippet?.categoryId.orEmpty(),
+                it.id.orEmpty(),
             )
         } ?: emptyList()
     }
 
-    override fun getCategoryVideos(category: String): List<VideoEntity> {
-        return emptyList()
+    override suspend fun getCategoryVideos(categoryId: String): List<VideoEntity> {
+        return youtubeService.getCategoryVideos(videoCategoryId = categoryId).items?.map {
+            VideoEntity(
+                releaseDate = it.snippet?.publishedAt.orEmpty(),
+                id = it.id?.videoId.orEmpty(),
+                channelTitle = it.snippet?.channelTitle.orEmpty(),
+                title = it.snippet?.title.orEmpty(),
+                description = it.snippet?.description.orEmpty(),
+                thumbnail = it.snippet?.thumbnails?.maxres?.url
+                    ?: it.snippet?.thumbnails?.default?.url.orEmpty(),
+                categoryId = it.snippet?.categoryId.orEmpty(),
+            )
+        } ?: emptyList()
     }
 
     override fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity> {
