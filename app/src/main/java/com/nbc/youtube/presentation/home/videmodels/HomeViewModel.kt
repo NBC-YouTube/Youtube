@@ -10,13 +10,13 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
     private val _popularVideos = MutableLiveData<List<VideoInfo>>()
-    val popularVideos : LiveData<List<VideoInfo>> get() = _popularVideos
+    val popularVideos: LiveData<List<VideoInfo>> get() = _popularVideos
 
     private val _categoryVideos = MutableLiveData<List<VideoInfo>>()
-    val categoryVideos : LiveData<List<VideoInfo>> get() = _categoryVideos
+    val categoryVideos: LiveData<List<VideoInfo>> get() = _categoryVideos
 
     private val _categories = MutableLiveData<List<String>>()
-    val categories : LiveData<List<String>> get() =_categories
+    val categories: LiveData<List<String>> get() = _categories
     fun loadCategories() {
         viewModelScope.launch {
             _categories.value = repository.getCategories()

@@ -8,7 +8,7 @@ import com.nbc.youtube.presentation.model.UserInfo
 
 
 @Entity(tableName = "users")
-data class UserEntity (
+data class UserEntity(
     val name: String,
     @ColumnInfo("profile_thumbnail") val profileThumbnail: Uri,
     @ColumnInfo("channel_thumbnail") val channelThumbnail: Uri,
@@ -23,6 +23,7 @@ data class UserEntity (
         introduction = introduction,
         id = id,
     )
+
     companion object {
         /**
          * 초기 유저 ID를 나타냅니다.

@@ -4,7 +4,7 @@ import com.nbc.youtube.data.local.model.VideoEntity
 
 class YoutubeRemoteDataSourceImpl(
     private val youtubeService: YoutubeService,
-): YoutubeRemoteDataSource {
+) : YoutubeRemoteDataSource {
     override suspend fun getPopularVideos(): List<VideoEntity> {
         return youtubeService.getPopularVideos().items?.map {
             VideoEntity(

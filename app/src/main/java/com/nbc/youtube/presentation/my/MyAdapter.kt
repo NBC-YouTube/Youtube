@@ -12,13 +12,13 @@ import com.nbc.youtube.presentation.model.VideoInfo
 
 class MyAdapter(
     private val onClick: (VideoInfo) -> Unit,
-): ListAdapter<VideoInfo, MyAdapter.ViewHolder>(diff) {
+) : ListAdapter<VideoInfo, MyAdapter.ViewHolder>(diff) {
 
 
     class ViewHolder(
         private val binding: ItemFavoriteVideoBinding,
         private val onClick: (VideoInfo) -> Unit,
-    ): RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var item: VideoInfo
 
@@ -37,7 +37,7 @@ class MyAdapter(
                 .into(binding.ivThumbnail)
             binding.tvChannelName.text = videoInfo.channelTitle
             binding.tvTitle.text = videoInfo.title
-            binding.tvReleaseDate.text =videoInfo.releaseDate
+            binding.tvReleaseDate.text = videoInfo.releaseDate
         }
     }
 
@@ -54,7 +54,7 @@ class MyAdapter(
     }
 
     companion object {
-        val diff = object: DiffUtil.ItemCallback<VideoInfo>() {
+        val diff = object : DiffUtil.ItemCallback<VideoInfo>() {
             override fun areItemsTheSame(oldItem: VideoInfo, newItem: VideoInfo): Boolean {
                 return oldItem.thumbnail == newItem.thumbnail
             }

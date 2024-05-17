@@ -4,7 +4,7 @@ import android.net.Uri
 import com.nbc.youtube.data.local.model.UserEntity
 import java.util.UUID
 
-data class UserInfo (
+data class UserInfo(
     val name: String,
     val profileThumbnail: Uri,
     val channelThumbnail: Uri,

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class MyViewModel(
     private val repository: YoutubeRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _userInfo = MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo>

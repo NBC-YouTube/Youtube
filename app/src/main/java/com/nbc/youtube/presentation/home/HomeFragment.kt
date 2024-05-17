@@ -67,11 +67,13 @@ class HomeFragment : Fragment() {
     private fun defaultRecyclerViewBind() {
         with(binding.rvCategoryVideo) {
             adapter = categoryVideoAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
         with(binding.rvMostPopular) {
             adapter = popularVideoAdapter
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
     }
@@ -89,6 +91,7 @@ class HomeFragment : Fragment() {
                 val selectedItem = spinnerAdapter.getItem(position)
                 homeViewModel.loadCategoryVideos(selectedItem)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
         }

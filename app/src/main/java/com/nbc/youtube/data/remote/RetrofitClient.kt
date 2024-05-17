@@ -1,7 +1,6 @@
 package com.nbc.youtube.data.remote
 
 import com.nbc.youtube.BuildConfig
-import com.nbc.youtube.data.local.Converters
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor

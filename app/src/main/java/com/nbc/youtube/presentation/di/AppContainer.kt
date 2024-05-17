@@ -56,7 +56,7 @@ class AppContainer(context: Context) {
 
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return when(modelClass) {
+                return when (modelClass) {
                     MyViewModel::class.java -> MyViewModel(repository)
                     HomeViewModel::class.java -> HomeViewModel(repository)
                     else -> throw IllegalArgumentException()
