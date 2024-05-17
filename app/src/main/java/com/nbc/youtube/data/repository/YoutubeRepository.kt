@@ -13,5 +13,5 @@ interface YoutubeRepository {
     suspend fun addFavoriteVideo(video: VideoInfo)
     suspend fun removeFavoriteVideo(video: VideoInfo)
 
-    fun getUserInfo(): UserInfo
+    suspend fun getUserInfo(): UserInfo
 }

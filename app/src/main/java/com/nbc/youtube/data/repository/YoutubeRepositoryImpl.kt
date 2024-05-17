@@ -1,6 +1,8 @@
 package com.nbc.youtube.data.repository
 
+import com.nbc.youtube.data.local.UserEntityDao
 import com.nbc.youtube.data.local.VideoEntityDao
+import com.nbc.youtube.data.local.model.UserEntity
 import com.nbc.youtube.data.remote.YoutubeRemoteDataSource
 import com.nbc.youtube.presentation.model.UserInfo
 import com.nbc.youtube.presentation.model.VideoInfo
@@ -8,6 +10,7 @@ import com.nbc.youtube.presentation.model.VideoInfo
 class YoutubeRepositoryImpl(
     private val youtubeRemoteDataSource: YoutubeRemoteDataSource,
     private val videoEntityDao: VideoEntityDao,
+    private val userEntityDao: UserEntityDao,
 ) : YoutubeRepository {
     override fun getPopularVideos(): List<VideoInfo> {
         TODO("Not yet implemented")
@@ -39,8 +42,8 @@ class YoutubeRepositoryImpl(
         videoEntityDao.removeFavoriteVideo(video.toEntity())
     }
 
-    override fun getUserInfo(): UserInfo {
-        TODO("Not yet implemented")
+    override suspend fun getUserInfo(): UserInfo {
+        return userEntityDao.getUserEntity(UserEntity.DEFAULT_USER_ID).toPresentation()
     }
 
 }
