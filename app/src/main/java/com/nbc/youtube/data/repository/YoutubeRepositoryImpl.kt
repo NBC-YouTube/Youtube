@@ -12,16 +12,20 @@ class YoutubeRepositoryImpl(
     private val videoEntityDao: VideoEntityDao,
     private val userEntityDao: UserEntityDao,
 ) : YoutubeRepository {
-    override fun getPopularVideos(): List<VideoInfo> {
-        TODO("Not yet implemented")
+    override suspend fun getPopularVideos(): List<VideoInfo> {
+        return youtubeRemoteDataSource.getPopularVideos().map {
+            it.toPresentation()
+        }
     }
 
     override fun getCategories(): List<String> {
-        TODO("Not yet implemented")
+        return youtubeRemoteDataSource.getCategories()
     }
 
     override fun getCategoryVideos(category: String): List<VideoInfo> {
-        TODO("Not yet implemented")
+        return youtubeRemoteDataSource.getCategoryVideos(category).map {
+            it.toPresentation()
+        }
     }
 
     override suspend fun getFavoriteVideos(): List<VideoInfo> {
@@ -31,7 +35,9 @@ class YoutubeRepositoryImpl(
     }
 
     override fun getSearchVideo(query: String, safeSearchType: String): List<VideoInfo> {
-        TODO("Not yet implemented")
+        return youtubeRemoteDataSource.getSearchVideo(query, safeSearchType).map {
+            it.toPresentation()
+        }
     }
 
     override suspend fun addFavoriteVideo(video: VideoInfo) {

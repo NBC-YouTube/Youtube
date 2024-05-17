@@ -5,7 +5,7 @@ import com.nbc.youtube.presentation.model.VideoInfo
 
 interface YoutubeRepository {
 
-    fun getPopularVideos(): List<VideoInfo>
+    suspend fun getPopularVideos(): List<VideoInfo>
     fun getCategories(): List<String>
     fun getCategoryVideos(category: String): List<VideoInfo>
     suspend fun getFavoriteVideos(): List<VideoInfo>
