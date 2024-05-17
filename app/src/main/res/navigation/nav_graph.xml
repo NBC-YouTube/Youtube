@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="videoInfo"
-            app:argType="com.nbc.youtube.presentation.model.VideoEntity" />
+            app:argType="com.nbc.youtube.presentation.model.VideoInfo" />
     </fragment>
     <fragment
         android:id="@+id/myFragment"
@@ -42,7 +42,7 @@
             app:destination="@id/detailFragment" />
         <argument
             android:name="unlikedVideo"
-            app:argType="com.nbc.youtube.presentation.model.VideoEntity"
+            app:argType="com.nbc.youtube.presentation.model.VideoInfo"
             app:nullable="true" />
     </fragment>
 </navigation>
