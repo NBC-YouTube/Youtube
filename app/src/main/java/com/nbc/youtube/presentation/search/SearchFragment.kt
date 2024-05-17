@@ -37,8 +37,6 @@ class SearchFragment : Fragment() {
         setRecyclerView()
         setObserve()
         setSearchListeners()
-
-        viewModel.loadSearchVideos("query", "moderate")
     }
 
     private fun setRecyclerView() {
@@ -63,6 +61,7 @@ class SearchFragment : Fragment() {
     private fun setSearchListeners() {
         binding.searchBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
+            viewModel.loadSearchVideos(query, "moderate")
         }
 
         binding.kidsBtn.setOnClickListener {
