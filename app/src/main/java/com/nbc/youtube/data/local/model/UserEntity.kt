@@ -24,14 +24,10 @@ data class UserEntity (
         id = id,
     )
     companion object {
+        /**
+         * 초기 유저 ID를 나타냅니다.
+         * assets userEntity.db 파일에서 초기 유저 정보를 넣고 있으며, 이 유저의 ID와 동일합니다.
+         */
         const val DEFAULT_USER_ID = "1"
-
-        val userEntity = UserEntity(
-            name = "My PoKemon Channel Dummy Dummy",
-            profileThumbnail = Uri.parse("android.resource://com.nbc.youtube/drawable/sample_user_thumbnail"),
-            channelThumbnail = Uri.parse("android.resource://com.nbc.youtube/drawable/sample_channel_thumbnail"),
-            introduction = "Discover the latest Pokémon news, animations, and gameplay on the official Pokémon YouTube channel. Dive into the captivating world of Pokémon and experience everything it has to offer right here!",
-            id = DEFAULT_USER_ID,
-        )
     }
 }

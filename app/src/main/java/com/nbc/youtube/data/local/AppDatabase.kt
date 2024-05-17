@@ -17,27 +17,14 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun videoEntityDao(): VideoEntityDao
     abstract fun userEntityDao(): UserEntityDao
 
-    class AppDatabaseCallback(
-        private val scope: CoroutineScope,
-    ): RoomDatabase.Callback() {
-        override fun onCreate(db: SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTNACE?.let { appDatabase ->
-                scope.launch {
-                    appDatabase.userEntityDao().addUserEntity(UserEntity.userEntity)
-                }
-            }
-        }
-    }
-
     companion object {
         @Volatile
         private var INSTNACE: AppDatabase? = null
 
         fun getInstance(context: Context, scope: CoroutineScope): AppDatabase {
             return INSTNACE ?: synchronized(this) {
-                val instance = INSTNACE ?: Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube")
-                    .addCallback(AppDatabaseCallback(scope))
+                val instance = INSTNACE ?: Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube.db")
+                    .createFromAsset("database/userEntity.db")
                     .build()
                 INSTNACE = instance
                 instance

@@ -6,8 +6,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.nbc.youtube.data.local.AppDatabase
 import com.nbc.youtube.data.local.UserEntityDao
 import com.nbc.youtube.data.local.VideoEntityDao
+import com.nbc.youtube.data.remote.YoutubeRemoteDataSource
+import com.nbc.youtube.data.remote.YoutubeRemoteDataSourceImpl
 import com.nbc.youtube.data.repository.YoutubeRepository
+import com.nbc.youtube.data.repository.YoutubeRepositoryImpl
 import com.nbc.youtube.presentation.my.MyViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class AppContainer(context: Context) {
 
@@ -17,7 +22,7 @@ class AppContainer(context: Context) {
         AppDatabase.getInstance(context, applicationScope)
     }
 
-    fun provideVideoEntityDao(): VideoEntityDao {
+    private fun provideVideoEntityDao(): VideoEntityDao {
         return db.videoEntityDao()
     }
 
