@@ -1,6 +1,6 @@
 package com.nbc.youtube.data.remote
 
-import com.nbc.youtube.data.remote.model.YoutubeResponse
+import com.nbc.youtube.data.remote.model.response.YoutubeResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -31,5 +31,11 @@ interface YoutubeService {
         @Query("regionCode") regionCode: String = "kr", // 특정 지역
         @Query("videoCategoryId") videoCategoryId: String? = null, // 비디오 카테고리 ID
         @Query("maxResults") maxResults: Int = 30 // 최대 아이템 갯수
+    ): YoutubeResponse
+
+    @GET("videoCategories")
+    suspend fun getCategories(
+        @Query("part") part: String = "snippet",
+        @Query("regionCode") regionCode: String = "kr",
     ): YoutubeResponse
 }

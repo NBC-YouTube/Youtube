@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
+import com.nbc.youtube.presentation.model.CategoryInfo
 import com.nbc.youtube.presentation.model.VideoInfo
 import kotlinx.coroutines.launch
 
@@ -15,8 +16,8 @@ class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
     private val _categoryVideos = MutableLiveData<List<VideoInfo>>()
     val categoryVideos: LiveData<List<VideoInfo>> get() = _categoryVideos
 
-    private val _categories = MutableLiveData<List<String>>()
-    val categories: LiveData<List<String>> get() = _categories
+    private val _categories = MutableLiveData<List<CategoryInfo>>()
+    val categories: LiveData<List<CategoryInfo>> get() = _categories
     fun loadCategories() {
         viewModelScope.launch {
             _categories.value = repository.getCategories()
@@ -32,10 +33,10 @@ class HomeViewModel(private val repository: YoutubeRepository) : ViewModel() {
         }
     }
 
-    fun loadCategoryVideos(category: String) {
+    fun loadCategoryVideos(category: CategoryInfo) {
         viewModelScope.launch {
             runCatching {
-                val videos = repository.getCategoryVideos(category)
+                val videos = repository.getCategoryVideos(category.id)
                 _categoryVideos.value = videos
             }
         }

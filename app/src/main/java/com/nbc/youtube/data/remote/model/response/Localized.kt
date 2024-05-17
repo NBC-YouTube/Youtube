@@ -1,4 +1,4 @@
-package com.nbc.youtube.data.remote.model
+package com.nbc.youtube.data.remote.model.response
 
 data class Localized(
     val description: String?,

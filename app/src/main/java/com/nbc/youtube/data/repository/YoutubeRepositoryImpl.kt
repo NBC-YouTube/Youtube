@@ -4,6 +4,7 @@ import com.nbc.youtube.data.local.UserEntityDao
 import com.nbc.youtube.data.local.VideoEntityDao
 import com.nbc.youtube.data.local.model.UserEntity
 import com.nbc.youtube.data.remote.YoutubeRemoteDataSource
+import com.nbc.youtube.presentation.model.CategoryInfo
 import com.nbc.youtube.presentation.model.UserInfo
 import com.nbc.youtube.presentation.model.VideoInfo
 
@@ -18,8 +19,8 @@ class YoutubeRepositoryImpl(
         }
     }
 
-    override fun getCategories(): List<String> {
-        return youtubeRemoteDataSource.getCategories()
+    override suspend fun getCategories(): List<CategoryInfo> {
+        return youtubeRemoteDataSource.getCategories().map { it.toPresentation() }
     }
 
     override fun getCategoryVideos(category: String): List<VideoInfo> {

@@ -1,4 +1,4 @@
-package com.nbc.youtube.data.remote.model
+package com.nbc.youtube.data.remote.model.response
 
 data class Snippet(
     val categoryId: String?,
@@ -12,5 +12,6 @@ data class Snippet(
     val publishedAt: String?,
     val tags: List<String>?,
     val thumbnails: Thumbnails?,
+    val assignable: Boolean?,
     val title: String?,
 )

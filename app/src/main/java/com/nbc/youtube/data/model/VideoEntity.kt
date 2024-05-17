@@ -1,4 +1,4 @@
-package com.nbc.youtube.data.local.model
+package com.nbc.youtube.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

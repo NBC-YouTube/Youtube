@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.nbc.youtube.data.local.model.VideoEntity
+import com.nbc.youtube.data.model.VideoEntity
 
 @Dao
 interface VideoEntityDao {

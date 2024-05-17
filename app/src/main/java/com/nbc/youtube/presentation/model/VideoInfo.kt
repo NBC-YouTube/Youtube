@@ -1,7 +1,7 @@
 package com.nbc.youtube.presentation.model
 
 import android.os.Parcelable
-import com.nbc.youtube.data.local.model.VideoEntity
+import com.nbc.youtube.data.model.VideoEntity
 import kotlinx.parcelize.Parcelize
 
 /**

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.nbc.youtube.data.local.model.UserEntity
-import com.nbc.youtube.data.local.model.VideoEntity
+import com.nbc.youtube.data.model.VideoEntity
 
 @Database(entities = [VideoEntity::class, UserEntity::class], version = 1)
 @TypeConverters(Converters::class)

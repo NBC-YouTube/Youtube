@@ -1,6 +1,7 @@
 package com.nbc.youtube.data.remote
 
-import com.nbc.youtube.data.local.model.VideoEntity
+import com.nbc.youtube.data.model.VideoEntity
+import com.nbc.youtube.data.remote.model.CategoryEntity
 
 class YoutubeRemoteDataSourceImpl(
     private val youtubeService: YoutubeService,
@@ -19,15 +20,20 @@ class YoutubeRemoteDataSourceImpl(
         } ?: emptyList()
     }
 
-    override fun getCategories(): List<String> {
-        return emptyList()
+    override suspend fun getCategories(): List<CategoryEntity> {
+        return youtubeService.getCategories().items?.map {
+            CategoryEntity(
+                it.snippet?.title.orEmpty(),
+                it.snippet?.categoryId.orEmpty(),
+            )
+        } ?: emptyList()
     }
 
     override fun getCategoryVideos(category: String): List<VideoEntity> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
     override fun getSearchVideo(query: String, safeSearchType: String): List<VideoEntity> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 }
