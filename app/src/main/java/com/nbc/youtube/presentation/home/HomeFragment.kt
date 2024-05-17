@@ -12,14 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nbc.youtube.databinding.FragmentHomeBinding
+import com.nbc.youtube.presentation.App
 import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
 import com.nbc.youtube.presentation.home.videmodels.HomeViewModel
-import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
 import com.nbc.youtube.presentation.model.VideoInfo
 
 
 class HomeFragment : Fragment() {
+
+    private val appContainer by lazy {
+        (requireActivity().application as App).appContainer
+    }
 
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
@@ -27,7 +31,7 @@ class HomeFragment : Fragment() {
     private val popularVideoAdapter by lazy { VideoAdapter() }
     private val categoryVideoAdapter by lazy { VideoAdapter() }
     private val homeViewModel by viewModels<HomeViewModel> {
-        VideosViewModelFactory()
+        appContainer.createViewModelFactory()
     }
     private val spinnerAdapter by lazy { CategorySpinnerAdapter(requireContext()) }
 

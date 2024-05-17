@@ -21,7 +21,7 @@ abstract class AppDatabase: RoomDatabase() {
         @Volatile
         private var INSTNACE: AppDatabase? = null
 
-        fun getInstance(context: Context, scope: CoroutineScope): AppDatabase {
+        fun getInstance(context: Context): AppDatabase {
             return INSTNACE ?: synchronized(this) {
                 val instance = INSTNACE ?: Room.databaseBuilder(context, AppDatabase::class.java, "nbc-youtube.db")
                     .createFromAsset("database/userEntity.db")
