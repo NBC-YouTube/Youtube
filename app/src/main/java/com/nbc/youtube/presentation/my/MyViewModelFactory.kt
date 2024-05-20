@@ -6,7 +6,7 @@ import com.nbc.youtube.data.repository.YoutubeRepository
 
 class MyViewModelFactory: ViewModelProvider.Factory {
 
-    private val repository: YoutubeRepository = FakeRepositoryImpl()
+    private val repository: YoutubeRepository = YoutubeRepository()
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

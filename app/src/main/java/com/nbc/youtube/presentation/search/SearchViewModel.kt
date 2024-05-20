@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nbc.youtube.data.repository.YoutubeRepository
 import com.nbc.youtube.presentation.model.VideoInfo
+import com.nbc.youtube.presentation.search.model.SafeSearchType
 import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import kotlinx.coroutines.launch
 
@@ -16,8 +17,20 @@ class SearchViewModel(
     val searchVideo: LiveData<List<VideoInfoWithLiked>>
         get() = _searchVideos
 
+    private val _kidsSearch = MutableLiveData(false)
+    val kidSearch : LiveData<Boolean>
+        get() = _kidsSearch
+
+    private val _isLiked = MutableLiveData<Boolean>()
+    val isLiked: LiveData<Boolean>
+        get() = _isLiked
+
+    private val _finalLiked = MutableLiveData<Boolean>()
+    val finalLiked: LiveData<Boolean>
+        get() = _finalLiked
+
     private fun mapToVideoEntityWithLiked(
-        videos: List<VideoInfoWithLiked>,
+        videos: List<VideoInfo>,
         favorites: List<VideoInfo>
     ): List<VideoInfoWithLiked> {
         return videos.map { video ->
@@ -35,7 +48,7 @@ class SearchViewModel(
         }
     }
 
-    fun loadSearchVideos(query: String, safeSearchType: String) {
+    fun loadSearchVideos(query: String, safeSearchType: SafeSearchType) {
         viewModelScope.launch {
             runCatching {
                 val videos = repository.getSearchVideo(query, safeSearchType)
@@ -46,15 +59,23 @@ class SearchViewModel(
         }
     }
 
-    fun addFavoriteVideo(video: VideoInfoWithLiked) {
-        val videos = _searchVideos.value?.toMutableList() ?: return
-        videos.add(video)
-        _searchVideos.value = videos
+    fun updateLiked(video: VideoInfoWithLiked) {
+        val liked = _isLiked.value?.not() ?: return
+        _isLiked.value = liked
+
+        viewModelScope.launch {
+            if(liked) {
+                repository.addFavoriteVideo(video.likedToVideoInfo())
+            } else {
+                repository.removeFavoriteVideo(video.likedToVideoInfo())
+            }
+            _searchVideos.value = _searchVideos.value?.map {
+                if (it.id == video.id) it.copy(liked = liked) else it
+            }
+        }
     }
 
-    fun removeFavoriteVideo(video: VideoInfoWithLiked) {
-        val videos = _searchVideos.value?.toMutableList() ?: return
-        videos.remove(video)
-        _searchVideos.value = videos
+    fun kidsSearchType(kidsSearch: Boolean) {
+        _kidsSearch.value = kidsSearch
     }
 }

@@ -2,6 +2,7 @@ package com.nbc.youtube.data.repository
 
 import com.nbc.youtube.presentation.model.UserInfo
 import com.nbc.youtube.presentation.model.VideoInfo
+import com.nbc.youtube.presentation.search.model.SafeSearchType
 import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 
 interface YoutubeRepository {
@@ -10,7 +11,7 @@ interface YoutubeRepository {
     fun getCategories(): List<String>
     fun getCategoryVideos(category: String): List<VideoInfo>
     fun getFavoriteVideos(): List<VideoInfo>
-    fun getSearchVideo(query: String, safeSearchType: String):List<VideoInfoWithLiked>
+    fun getSearchVideo(query: String, safeSearchType: SafeSearchType):List<VideoInfo>
     fun addFavoriteVideo(video: VideoInfo)
     fun removeFavoriteVideo(video: VideoInfo)
 

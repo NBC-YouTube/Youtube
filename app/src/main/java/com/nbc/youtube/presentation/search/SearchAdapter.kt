@@ -40,10 +40,10 @@ class SearchAdapter(
         }
 
         private fun updateLikeButton() {
-            val imageResource =
+            val setImageResource =
                 if (item.liked) R.drawable.ic_thumb_fill else R.drawable.ic_thumb_empty
             Glide.with(binding.root.context)
-                .load(imageResource)
+                .load(setImageResource)
                 .into(binding.searchLikeBtn)
         }
 
@@ -86,7 +86,7 @@ class SearchAdapter(
                 oldItem: VideoInfoWithLiked,
                 newItem: VideoInfoWithLiked
             ): Boolean {
-                return oldItem.thumbnail == newItem.thumbnail
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(

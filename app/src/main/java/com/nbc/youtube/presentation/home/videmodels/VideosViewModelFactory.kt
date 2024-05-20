@@ -6,7 +6,7 @@ import com.nbc.youtube.data.repository.YoutubeRepository
 
 class VideosViewModelFactory: ViewModelProvider.Factory {
 
-    private val repository: YoutubeRepository = testRepo()
+    private val repository: YoutubeRepository = YoutubeRepository()
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(VideosViewModel::class.java)) {

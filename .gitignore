@@ -160,6 +160,11 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Ignore specific Kotlin files
+FakeRepo.kt
+FakeRepositoryImpl.kt
+testRepo.kt
+
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar

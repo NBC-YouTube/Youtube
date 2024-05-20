@@ -4,7 +4,7 @@ import com.nbc.youtube.presentation.model.VideoInfo
 
 data class VideoInfoWithLiked(
     val releaseDate: String,
-    val id: String,
+    var id: String,
     val channelTitle: String,
     val title: String,
     val description: String,
@@ -12,7 +12,7 @@ data class VideoInfoWithLiked(
     val categoryId: String,
     val liked: Boolean,
 ) {
-    fun likedToVideoEntity() : VideoInfo {
+    fun likedToVideoInfo() : VideoInfo {
         return VideoInfo(
             releaseDate = releaseDate,
             id = id,

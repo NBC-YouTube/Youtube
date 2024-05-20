@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nbc.youtube.databinding.FragmentSearchBinding
-import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
+import com.nbc.youtube.presentation.detail.DetailFragment.Companion.KEY_FOR_VIDEO_LIKED
+import com.nbc.youtube.presentation.search.model.SafeSearchType
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
@@ -23,11 +24,11 @@ class SearchFragment : Fragment() {
 
     private val adapter = SearchAdapter (
         onClick = {
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoEntity())
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoInfo())
             findNavController().navigate(action)
         },
         likeClick = { videoEntityWithLiked ->
-            viewModel.addFavoriteVideo(videoEntityWithLiked)
+            viewModel.updateLiked(videoEntityWithLiked)
         }
     )
 
@@ -56,13 +57,12 @@ class SearchFragment : Fragment() {
             adapter.submitList(it)
         }
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<VideoInfoWithLiked>(
-            KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
-                if (liked.liked) {
-                    viewModel.addFavoriteVideo(liked)
-                } else {
-                    viewModel.removeFavoriteVideo(liked)
-                }
+        viewModel.kidSearch.observe(viewLifecycleOwner) { kidSearch ->
+            if (kidSearch) {
+                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#ACACAC"))
+            } else {
+                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
+            }
         }
     }
 
@@ -71,27 +71,21 @@ class SearchFragment : Fragment() {
 
         binding.searchBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
-            viewModel.loadSearchVideos(query, "moderate")
+            viewModel.loadSearchVideos(query, SafeSearchType.moderate)
 
-            baseButtonColor?.let { color ->
-                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
-            }
+            viewModel.kidsSearchType(false)
         }
 
         binding.kidsBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
-            viewModel.loadSearchVideos(query, "strict")
+            viewModel.loadSearchVideos(query, SafeSearchType.strict)
 
-            binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#ACACAC"))
+           viewModel.kidsSearchType(true)
         }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-    }
-
-    companion object {
-        const val KEY_FOR_VIDEO_LIKED = "KEY_FOR_VIDEO_LIKED"
     }
 }
