@@ -23,4 +23,17 @@ data class VideoInfoWithLiked(
             categoryId = categoryId,
         )
     }
+
+    companion object {
+        val EMPTY = VideoInfoWithLiked(
+            releaseDate = "",
+            id = "",
+            channelTitle = "",
+            title = "",
+            description = "",
+            thumbnail = "",
+            categoryId = "",
+            liked = false
+        )
+    }
 }

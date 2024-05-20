@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nbc.youtube.databinding.FragmentSearchBinding
-import com.nbc.youtube.presentation.detail.DetailFragment.Companion.KEY_FOR_VIDEO_LIKED
+import com.nbc.youtube.presentation.detail.DetailFragment
 import com.nbc.youtube.presentation.search.model.SafeSearchType
 
 class SearchFragment : Fragment() {
@@ -28,6 +28,9 @@ class SearchFragment : Fragment() {
             findNavController().navigate(action)
         },
         likeClick = { videoEntityWithLiked ->
+            viewModel.updateSelectedItem(videoEntityWithLiked)
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(videoEntityWithLiked.likedToVideoInfo())
+            findNavController().navigate(action)
             viewModel.updateLiked(videoEntityWithLiked)
         }
     )
@@ -63,6 +66,11 @@ class SearchFragment : Fragment() {
             } else {
                 binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
             }
+        }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
+            DetailFragment.KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
+                viewModel.onLikedChange(liked)
         }
     }
 

@@ -22,12 +22,6 @@ class SearchViewModel(
         get() = _kidsSearch
 
     private val _isLiked = MutableLiveData<Boolean>()
-    val isLiked: LiveData<Boolean>
-        get() = _isLiked
-
-    private val _finalLiked = MutableLiveData<Boolean>()
-    val finalLiked: LiveData<Boolean>
-        get() = _finalLiked
 
     private fun mapToVideoEntityWithLiked(
         videos: List<VideoInfo>,
@@ -77,5 +71,25 @@ class SearchViewModel(
 
     fun kidsSearchType(kidsSearch: Boolean) {
         _kidsSearch.value = kidsSearch
+    }
+
+    private var selectedItem : VideoInfoWithLiked = VideoInfoWithLiked.EMPTY
+    fun updateSelectedItem(selectedItem: VideoInfoWithLiked) {
+        this.selectedItem = selectedItem
+    }
+
+    fun onLikedChange(liked: Boolean) {
+        if (selectedItem == VideoInfoWithLiked.EMPTY || selectedItem.liked == liked) {
+            return
+        }
+        val videos = _searchVideos.value?.toMutableList() ?: return
+        val idx = videos.indexOfFirst {
+            it == selectedItem
+        }
+        if (idx == -1) {
+            return
+        }
+        videos[idx] = selectedItem.copy(liked = liked)
+        _searchVideos.value = videos
     }
 }
