@@ -1,11 +1,13 @@
 package com.nbc.youtube.presentation.search
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -29,8 +31,6 @@ class SearchFragment : Fragment() {
         },
         likeClick = { videoEntityWithLiked ->
             viewModel.updateSelectedItem(videoEntityWithLiked)
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(videoEntityWithLiked.likedToVideoInfo())
-            findNavController().navigate(action)
             viewModel.updateLiked(videoEntityWithLiked)
         }
     )
@@ -70,8 +70,13 @@ class SearchFragment : Fragment() {
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
             DetailFragment.KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
-                viewModel.onLikedChange(liked)
+            viewModel.onLikedChange(liked)
         }
+    }
+
+    private fun hideKeyboard() {
+        val inputMutableList = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMutableList.hideSoftInputFromWindow(binding.searchText.windowToken, 0)
     }
 
     private fun setSearchListeners() {
@@ -80,6 +85,7 @@ class SearchFragment : Fragment() {
         binding.searchBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
             viewModel.loadSearchVideos(query, SafeSearchType.moderate)
+            hideKeyboard()
 
             viewModel.kidsSearchType(false)
         }
@@ -88,7 +94,7 @@ class SearchFragment : Fragment() {
             val query = binding.searchText.text.toString()
             viewModel.loadSearchVideos(query, SafeSearchType.strict)
 
-           viewModel.kidsSearchType(true)
+            viewModel.kidsSearchType(true)
         }
     }
 

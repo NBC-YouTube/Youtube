@@ -1,6 +1,5 @@
 package com.nbc.youtube.presentation.search
 
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.nbc.youtube.R
 import com.nbc.youtube.databinding.SearchItemBinding
 import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
-import java.time.LocalDate
+import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
@@ -58,8 +57,9 @@ class SearchAdapter(
             binding.searchChannelTitle.text = videoEntity.channelTitle
 
             val formattedDate = try {
-                val parsedDate = LocalDate.parse(videoEntity.releaseDate)
-                parsedDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+                val parsedDate = OffsetDateTime.parse(videoEntity.releaseDate)
+                val localDate = parsedDate.toLocalDate()
+                localDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
             } catch (e: DateTimeParseException) {
                 videoEntity.releaseDate
             }
