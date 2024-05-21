@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.navigationSafeArgs)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinParcelize)
+    alias(libs.plugins.room)
 }
 
 val properties = Properties()
@@ -25,6 +26,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "YOUTUBE_API_KEY", "${properties["youtube_api_key"]}")
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 
     buildTypes {
@@ -59,8 +64,8 @@ dependencies {
 
     // retrofit
     implementation(libs.retrofit)
-    implementation(libs.gson)
-    implementation(libs.converter.gson)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
 
     // glide
     implementation(libs.glide)

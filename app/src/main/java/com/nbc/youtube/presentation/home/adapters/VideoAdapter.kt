@@ -13,7 +13,7 @@ import com.nbc.youtube.databinding.ItemHomeCategoryBinding
 import com.nbc.youtube.databinding.ItemHomeMostPopularBinding
 import com.nbc.youtube.presentation.model.VideoInfo
 
-class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class VideoAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var itemList = listOf<VideoInfo>()
     private var videoType: Int = 1
 
@@ -24,15 +24,25 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             1 -> {
-                val binding = ItemHomeMostPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemHomeMostPopularBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 Holder(binding)
             }
+
             2 -> {
-                val binding = ItemHomeCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemHomeCategoryBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
                 Holder(binding)
             }
+
             else -> throw IllegalArgumentException("Unknown View Type")
         }
     }
@@ -53,7 +63,7 @@ class VideoAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         (holder as Holder).bind(currentItem)
     }
 
-    class Holder(private val binding: ViewBinding): RecyclerView.ViewHolder(binding.root) {
+    class Holder(private val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: VideoInfo) {
             Glide.with(binding.root)
                 .load(item.thumbnail)

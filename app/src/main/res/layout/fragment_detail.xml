@@ -1,8 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.detail.DetailFragment">
 
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/detail_header_text"
+        android:textColor="@color/logoColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="15dp"
+        android:maxHeight="250dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header"
+        tools:src="@drawable/sample_channel_thumbnail" />
+
+    <Button
+        android:id="@+id/btn_like"
+        style="@style/detailButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+        tools:text="좋아요" />
+
+    <Button
+        android:id="@+id/btn_share"
+        style="@style/detailButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:text="@string/share"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_like"
+        app:layout_constraintTop_toTopOf="@id/btn_like" />
+
+    <TextView
+        android:id="@+id/tv_title_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btn_like"
+        app:layout_constraintTop_toBottomOf="@id/btn_like"
+        tools:text="영상 제목" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="18dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_title_header"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_header"
+        tools:text="AAAAAAAAAAAAAAAAA" />
+
+    <TextView
+        android:id="@+id/tv_description_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/detail_description"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="30dp"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_description_head"
+        app:layout_constraintTop_toBottomOf="@id/tv_description_head"
+        tools:text="안녕하세요." />
 </androidx.constraintlayout.widget.ConstraintLayout>

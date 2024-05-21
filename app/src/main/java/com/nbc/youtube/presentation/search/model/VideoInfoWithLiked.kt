@@ -12,7 +12,7 @@ data class VideoInfoWithLiked(
     val categoryId: String,
     val liked: Boolean,
 ) {
-    fun likedToVideoInfo() : VideoInfo {
+    fun likedToVideoInfo(): VideoInfo {
         return VideoInfo(
             releaseDate = releaseDate,
             id = id,

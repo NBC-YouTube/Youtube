@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class MyViewModel(
     private val repository: YoutubeRepository,
-): ViewModel() {
+) : ViewModel() {
 
     private val _userInfo = MutableLiveData<UserInfo>()
     val userInfo: LiveData<UserInfo>
@@ -28,7 +28,14 @@ class MyViewModel(
             runCatching {
                 val info = repository.getUserInfo()
                 _userInfo.value = info
+
+                loadFavoriteInfo()
             }
+        }
+    }
+
+    fun loadFavoriteInfo() {
+        viewModelScope.launch {
             runCatching {
                 val videos = repository.getFavoriteVideos()
                 _favoriteVideos.value = videos

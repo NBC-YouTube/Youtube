@@ -9,23 +9,35 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.nbc.youtube.databinding.FragmentMyBinding
+import com.nbc.youtube.presentation.App
 import com.nbc.youtube.presentation.detail.DetailFragment
 import com.nbc.youtube.presentation.model.UserInfo
 
 
 class MyFragment : Fragment() {
+
+    private val appContainer by lazy {
+        (requireActivity().application as App).appContainer
+    }
+
     private var _binding: FragmentMyBinding? = null
     private val binding: FragmentMyBinding
         get() = _binding!!
 
     private val viewModel by viewModels<MyViewModel> {
-        MyViewModelFactory()
+        appContainer.createViewModelFactory()
     }
 
     private val adapter = MyAdapter {
         viewModel.updateClickedItem(it)
         val action = MyFragmentDirections.actionMyFragmentToDetailFragment(it)
         findNavController().navigate(action)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModel.loadUserInfo()
     }
 
     override fun onCreateView(
@@ -36,22 +48,12 @@ class MyFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        loadUserInfo()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setThumbnailClip()
         setRecyclerView()
         setObserve()
-    }
-
-    private fun loadUserInfo() {
-        viewModel.loadUserInfo()
     }
 
     private fun setThumbnailClip() {
@@ -74,6 +76,8 @@ class MyFragment : Fragment() {
         )?.observe(viewLifecycleOwner) { liked ->
             if (!liked) {
                 viewModel.removeFavoriteVideo()
+            } else {
+                viewModel.loadFavoriteInfo()
             }
         }
     }

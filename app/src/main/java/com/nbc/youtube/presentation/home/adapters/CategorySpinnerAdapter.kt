@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import com.nbc.youtube.R
 import com.nbc.youtube.databinding.ItemCustomSpinnerBinding
+import com.nbc.youtube.presentation.model.CategoryInfo
 
-class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
-    android.R.layout.simple_spinner_item) {
+class CategorySpinnerAdapter(context: Context) : ArrayAdapter<CategoryInfo>(
+    context,
+    android.R.layout.simple_spinner_item
+) {
 
-    private val categoryList: MutableList<String> = mutableListOf()
+    private val categoryList: MutableList<CategoryInfo> = mutableListOf()
 
-    fun setCategoryList(categories: List<String>) {
+    fun setCategoryList(categories: List<CategoryInfo>) {
         categoryList.clear()
         categoryList.addAll(categories)
         notifyDataSetChanged()
@@ -24,7 +25,7 @@ class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
         return categoryList.size
     }
 
-    override fun getItem(position: Int): String {
+    override fun getItem(position: Int): CategoryInfo {
         return categoryList[position]
     }
 
@@ -44,7 +45,7 @@ class CategorySpinnerAdapter(context: Context) : ArrayAdapter<String>(context,
             ItemCustomSpinnerBinding.bind(convertView)
         }
 
-        binding.tvCategoryItem.text = categoryList[position]
+        binding.tvCategoryItem.text = categoryList[position].name
 
         return binding.root
     }
