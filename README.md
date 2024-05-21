@@ -42,6 +42,21 @@
 </br>
 
 
+## 사용된 기술 스택
+이 프로젝트에서는 다음과 같은 주요 기술들을 사용하였습니다:
+- **Room**: 데이터베이스 관리를 위한 Android 라이브러리.
+- **Retrofit**: 네트워크 통신을 위한 타입 안전 HTTP 클라이언트.
+- **MVVM (Model-View-ViewModel)**: 아키텍처 패턴으로, UI 로직과 비즈니스 로직을 분리.
+- **RecyclerView**: 리스트 형식의 데이터를 효율적으로 표시하기 위한 위젯.
+- **Moshi**: JSON 직렬화 및 역직렬화를 위한 라이브러리.
+- **Navigation Component**: 애플리케이션 내의 화면 간 내비게이션을 단순화하기 위한 라이브러리.
+
+---
+## 아키텍쳐 설계
+![image](https://github.com/NBC-YouTube/Youtube/assets/72172581/e376ff74-aeb9-4360-b3b1-7f3fc48a07f5)
+
+
+
 
 ---
 
