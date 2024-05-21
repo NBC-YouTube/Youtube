@@ -53,7 +53,8 @@
 
 ---
 ## 아키텍쳐 설계
-![image](https://github.com/NBC-YouTube/Youtube/assets/72172581/4124c3a0-ff45-43b8-9d83-a9aabfe4eb27)
+![image](https://github.com/NBC-YouTube/Youtube/assets/72172581/d3a74647-d857-4874-96f1-0663a287e914)
+
 
 ---
 
