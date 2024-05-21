@@ -31,13 +31,14 @@ class SearchFragment : Fragment() {
     }
     private var baseButtonColor: ColorStateList? = null
 
-    private val adapter = SearchAdapter (
+    private val adapter = SearchAdapter(
         onClick = {
-            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoInfo())
+            viewModel.updateSelectedItem(it)
+            val action =
+                SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.likedToVideoInfo())
             findNavController().navigate(action)
         },
         likeClick = { videoEntityWithLiked ->
-            viewModel.updateSelectedItem(videoEntityWithLiked)
             viewModel.updateLiked(videoEntityWithLiked)
         }
     )
@@ -69,20 +70,24 @@ class SearchFragment : Fragment() {
 
         viewModel.kidSearch.observe(viewLifecycleOwner) { kidSearch ->
             if (kidSearch) {
-                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#ACACAC"))
+                binding.kidsBtn.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#ACACAC"))
             } else {
-                binding.kidsBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
+                binding.kidsBtn.backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#F6F6F6"))
             }
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-            DetailFragment.KEY_FOR_VIDEO_LIKED)?.observe(viewLifecycleOwner) { liked ->
+            DetailFragment.KEY_FOR_VIDEO_LIKED
+        )?.observe(viewLifecycleOwner) { liked ->
             viewModel.onLikedChange(liked)
         }
     }
 
     private fun hideKeyboard() {
-        val inputMutableList = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMutableList =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMutableList.hideSoftInputFromWindow(binding.searchText.windowToken, 0)
     }
 
