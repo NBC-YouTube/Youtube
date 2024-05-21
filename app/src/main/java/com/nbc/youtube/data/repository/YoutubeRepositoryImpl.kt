@@ -7,6 +7,7 @@ import com.nbc.youtube.data.remote.YoutubeRemoteDataSource
 import com.nbc.youtube.presentation.model.CategoryInfo
 import com.nbc.youtube.presentation.model.UserInfo
 import com.nbc.youtube.presentation.model.VideoInfo
+import com.nbc.youtube.presentation.search.model.SafeSearchType
 
 class YoutubeRepositoryImpl(
     private val youtubeRemoteDataSource: YoutubeRemoteDataSource,
@@ -35,8 +36,8 @@ class YoutubeRepositoryImpl(
         }
     }
 
-    override suspend fun getSearchVideo(query: String, safeSearchType: String): List<VideoInfo> {
-        return youtubeRemoteDataSource.getSearchVideo(query, safeSearchType).map {
+    override suspend fun getSearchVideo(query: String, safeSearchType: SafeSearchType): List<VideoInfo> {
+        return youtubeRemoteDataSource.getSearchVideo(query, safeSearchType.symbol).map {
             it.toPresentation()
         }
     }

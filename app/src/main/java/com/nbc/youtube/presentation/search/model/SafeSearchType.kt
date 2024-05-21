@@ -1,5 +1,5 @@
 package com.nbc.youtube.presentation.search.model
 
-enum class SafeSearchType {
-    moderate, strict
+enum class SafeSearchType(val symbol: String) {
+    MODERATE("moderate"), STRICT("strict")
 }

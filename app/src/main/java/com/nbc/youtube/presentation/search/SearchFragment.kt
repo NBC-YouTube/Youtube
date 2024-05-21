@@ -90,7 +90,7 @@ class SearchFragment : Fragment() {
 
         binding.searchBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
-            viewModel.loadSearchVideos(query, SafeSearchType.moderate)
+            viewModel.loadSearchVideos(query, SafeSearchType.MODERATE)
             hideKeyboard()
 
             viewModel.kidsSearchType(false)
@@ -98,7 +98,7 @@ class SearchFragment : Fragment() {
 
         binding.kidsBtn.setOnClickListener {
             val query = binding.searchText.text.toString()
-            viewModel.loadSearchVideos(query, SafeSearchType.strict)
+            viewModel.loadSearchVideos(query, SafeSearchType.STRICT)
 
             viewModel.kidsSearchType(true)
         }
