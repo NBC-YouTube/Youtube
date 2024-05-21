@@ -1,17 +1,19 @@
 package com.nbc.youtube.data.repository
 
 import com.nbc.youtube.presentation.model.UserInfo
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
+import com.nbc.youtube.presentation.search.model.SafeSearchType
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 
 interface YoutubeRepository {
 
-    fun getPopularVideos(): List<VideoEntity>
+    fun getPopularVideos(): List<VideoInfo>
     fun getCategories(): List<String>
-    fun getCategoryVideos(category: String): List<VideoEntity>
-    fun getFavoriteVideos(): List<VideoEntity>
-    fun getSearchVideo(query: String, safeSearchType: String):List<VideoEntity>
-    fun addFavoriteVideo(video: VideoEntity)
-    fun removeFavoriteVideo(video: VideoEntity)
+    fun getCategoryVideos(category: String): List<VideoInfo>
+    fun getFavoriteVideos(): List<VideoInfo>
+    fun getSearchVideo(query: String, safeSearchType: SafeSearchType):List<VideoInfo>
+    fun addFavoriteVideo(video: VideoInfo)
+    fun removeFavoriteVideo(video: VideoInfo)
 
     fun getUserInfo(): UserInfo
 }

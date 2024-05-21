@@ -14,6 +14,7 @@
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.nbc.youtube.presentation.search.SearchFragment"
@@ -23,6 +24,7 @@
             android:id="@+id/action_searchFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.nbc.youtube.presentation.detail.DetailFragment"
@@ -30,8 +32,9 @@
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="videoInfo"
-            app:argType="com.nbc.youtube.presentation.model.VideoEntity" />
+            app:argType="com.nbc.youtube.presentation.model.VideoInfo" />
     </fragment>
+
     <fragment
         android:id="@+id/myFragment"
         android:name="com.nbc.youtube.presentation.my.MyFragment"
@@ -42,7 +45,7 @@
             app:destination="@id/detailFragment" />
         <argument
             android:name="unlikedVideo"
-            app:argType="com.nbc.youtube.presentation.model.VideoEntity"
+            app:argType="com.nbc.youtube.presentation.model.VideoInfo"
             app:nullable="true" />
     </fragment>
 </navigation>

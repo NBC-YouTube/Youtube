@@ -70,7 +70,7 @@ class MyFragment : Fragment() {
             adapter.submitList(it)
         }
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>(
-            DetailFragment.KEY_FOR_VIDEO_ENTITY_DISLIKED
+            DetailFragment.KEY_FOR_VIDEO_LIKED
         )?.observe(viewLifecycleOwner) { liked ->
             if (!liked) {
                 viewModel.removeFavoriteVideo()

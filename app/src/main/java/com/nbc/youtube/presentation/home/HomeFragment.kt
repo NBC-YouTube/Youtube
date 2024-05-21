@@ -16,7 +16,7 @@ import com.nbc.youtube.presentation.home.adapters.CategorySpinnerAdapter
 import com.nbc.youtube.presentation.home.adapters.VideoAdapter
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModel
 import com.nbc.youtube.presentation.home.videmodels.VideosViewModelFactory
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 
 
 class HomeFragment : Fragment() {
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
 
     private fun setItemClick(adapter: VideoAdapter) {
         adapter.itemClick = object : VideoAdapter.ItemClick {
-            override fun onClick(item: VideoEntity) {
+            override fun onClick(item: VideoInfo) {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(item)
                 findNavController().navigate(action)
             }

@@ -26,4 +26,8 @@ class DetailFragment : Fragment() {
 
         super.onDestroyView()
     }
+
+    companion object {
+        const val KEY_FOR_VIDEO_LIKED = "KEY_FOR_VIDEO_LIKED"
+    }
 }

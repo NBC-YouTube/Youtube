@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.nbc.youtube.R
 import com.nbc.youtube.databinding.ItemFavoriteVideoBinding
-import com.nbc.youtube.presentation.model.VideoEntity
+import com.nbc.youtube.presentation.model.VideoInfo
 
 class MyAdapter(
-    private val onClick: (VideoEntity) -> Unit,
-): ListAdapter<VideoEntity, MyAdapter.ViewHolder>(diff) {
+    private val onClick: (VideoInfo) -> Unit,
+): ListAdapter<VideoInfo, MyAdapter.ViewHolder>(diff) {
 
 
     class ViewHolder(
         private val binding: ItemFavoriteVideoBinding,
-        private val onClick: (VideoEntity) -> Unit,
+        private val onClick: (VideoInfo) -> Unit,
     ): RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var item: VideoEntity
+        private lateinit var item: VideoInfo
 
         init {
             binding.root.setOnClickListener {
@@ -28,16 +28,16 @@ class MyAdapter(
             }
         }
 
-        fun bind(videoEntity: VideoEntity) {
-            item = videoEntity
+        fun bind(videoInfo: VideoInfo) {
+            item = videoInfo
 
             Glide.with(binding.root.context)
-                .load(videoEntity.thumbnail)
+                .load(videoInfo.thumbnail)
                 .placeholder(R.drawable.sample_placeholder)
                 .into(binding.ivThumbnail)
-            binding.tvChannelName.text = videoEntity.channelTitle
-            binding.tvTitle.text = videoEntity.title
-            binding.tvReleaseDate.text =videoEntity.releaseDate
+            binding.tvChannelName.text = videoInfo.channelTitle
+            binding.tvTitle.text = videoInfo.title
+            binding.tvReleaseDate.text =videoInfo.releaseDate
         }
     }
 
@@ -54,12 +54,12 @@ class MyAdapter(
     }
 
     companion object {
-        val diff = object: DiffUtil.ItemCallback<VideoEntity>() {
-            override fun areItemsTheSame(oldItem: VideoEntity, newItem: VideoEntity): Boolean {
+        val diff = object: DiffUtil.ItemCallback<VideoInfo>() {
+            override fun areItemsTheSame(oldItem: VideoInfo, newItem: VideoInfo): Boolean {
                 return oldItem.thumbnail == newItem.thumbnail
             }
 
-            override fun areContentsTheSame(oldItem: VideoEntity, newItem: VideoEntity): Boolean {
+            override fun areContentsTheSame(oldItem: VideoInfo, newItem: VideoInfo): Boolean {
                 return oldItem == newItem
             }
 
