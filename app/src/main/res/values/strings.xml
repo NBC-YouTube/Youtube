@@ -3,6 +3,8 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="library">library</string>
+    <string name="search_hint">YouTube 검색</string>
+    <string name="kids_btn">키즈</string>
     <string name="most_popular">Most Popular</string>
     <string name="detail">Detail</string>
     <string name="sample_descrption">Discover the latest Pokémon news, animations, and gameplay on the official Pokémon YouTube channel. Dive into the captivating world of Pokémon and experience everything it has to offer right here! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! Dummy! </string>

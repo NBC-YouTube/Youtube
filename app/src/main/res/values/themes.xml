@@ -8,6 +8,18 @@
 
     <style name="Theme.Youtube" parent="Base.Theme.Youtube" />
 
+    <style name="searchBarStyle">
+        <item name="android:background">@drawable/bg_searchbar</item>
+    </style>
+
+    <style name="searchButtonStyle">
+        <item name="android:background">@drawable/bg_searchbutton</item>
+    </style>
+
+    <style name="kidsButtonStyle">
+        <item name="android:backgroundTint">#F6F6F6</item>
+    </style>
+
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
@@ -20,6 +32,7 @@
 
     <style name="Theme.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/transparent</item>
+>>>>>>> e3bffe5f5521e4e1cd70514011d86dccc326eeee
     </style>
 
     <style name="detailButtonStyle" parent="Widget.Material3.Button">

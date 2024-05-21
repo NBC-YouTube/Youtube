@@ -1,6 +1,7 @@
 package com.nbc.youtube.presentation.model
 
 import android.os.Parcelable
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import com.nbc.youtube.data.model.VideoEntity
 import kotlinx.parcelize.Parcelize
 
@@ -8,7 +9,6 @@ import kotlinx.parcelize.Parcelize
  * @param releaseDate 업로드 날짜
  * @param id 비디오 고유 ID
  * @param channelId 채널 고유 ID
- * @param id 비디오 고유 ID
  * @param channelTitle 채널이름
  * @param title 영상 제목
  * @param description 영상 설명
@@ -35,4 +35,17 @@ data class VideoInfo(
         thumbnail = thumbnail,
         categoryId = categoryId
     )
+
+    fun withLikedStatus(liked: Boolean): VideoInfoWithLiked {
+        return VideoInfoWithLiked(
+            releaseDate = releaseDate,
+            id = id,
+            channelTitle = channelTitle,
+            title = title,
+            description = description,
+            thumbnail = thumbnail,
+            categoryId = categoryId,
+            liked = liked,
+        )
+    }
 }
