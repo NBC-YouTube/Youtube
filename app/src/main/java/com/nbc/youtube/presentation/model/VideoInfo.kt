@@ -1,8 +1,8 @@
 package com.nbc.youtube.presentation.model
 
 import android.os.Parcelable
-import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import com.nbc.youtube.data.model.VideoEntity
+import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 import kotlinx.parcelize.Parcelize
 
 /**

@@ -4,7 +4,6 @@ import com.nbc.youtube.presentation.model.CategoryInfo
 import com.nbc.youtube.presentation.model.UserInfo
 import com.nbc.youtube.presentation.model.VideoInfo
 import com.nbc.youtube.presentation.search.model.SafeSearchType
-import com.nbc.youtube.presentation.search.model.VideoInfoWithLiked
 
 interface YoutubeRepository {
 
