@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,9 +53,14 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkViewModel()
         setRecyclerView()
         setObserve()
         setSearchListeners()
+    }
+
+    private fun checkViewModel() {
+        viewModel.checkVideoInfoLikedStatus()
     }
 
     private fun setRecyclerView() {
