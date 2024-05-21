@@ -15,6 +15,7 @@ import com.nbc.youtube.data.repository.YoutubeRepositoryImpl
 import com.nbc.youtube.presentation.detail.DetailViewModel
 import com.nbc.youtube.presentation.home.videmodels.HomeViewModel
 import com.nbc.youtube.presentation.my.MyViewModel
+import com.nbc.youtube.presentation.search.SearchViewModel
 import retrofit2.Retrofit
 
 class AppContainer(context: Context) {
@@ -61,6 +62,7 @@ class AppContainer(context: Context) {
                     MyViewModel::class.java -> MyViewModel(repository)
                     HomeViewModel::class.java -> HomeViewModel(repository)
                     DetailViewModel::class.java -> DetailViewModel(repository)
+                    SearchViewModel::class.java -> SearchViewModel(repository)
                     else -> throw IllegalArgumentException()
                 } as T
             }

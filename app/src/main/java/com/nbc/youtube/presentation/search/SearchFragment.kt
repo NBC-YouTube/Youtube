@@ -12,15 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.nbc.youtube.databinding.FragmentSearchBinding
+import com.nbc.youtube.presentation.App
 import com.nbc.youtube.presentation.detail.DetailFragment
 import com.nbc.youtube.presentation.search.model.SafeSearchType
 
 class SearchFragment : Fragment() {
+
+    private val appContainer by lazy {
+        (requireActivity().application as App).appContainer
+    }
+
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
         get() = _binding!!
     private val viewModel by viewModels<SearchViewModel> {
-        SearchViewModelFactory()
+        appContainer.createViewModelFactory()
     }
     private var baseButtonColor: ColorStateList? = null
 
