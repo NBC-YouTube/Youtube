@@ -32,18 +32,8 @@ class SearchAdapter(
             }
 
             binding.searchLikeBtn.setOnClickListener {
-                item = item.copy(liked = !item.liked)
-                updateLikeButton()
                 likeClick(item)
             }
-        }
-
-        private fun updateLikeButton() {
-            val setImageResource =
-                if (item.liked) R.drawable.ic_thumb_fill else R.drawable.ic_thumb_empty
-            Glide.with(binding.root.context)
-                .load(setImageResource)
-                .into(binding.searchLikeBtn)
         }
 
         fun bind(videoEntity: VideoInfoWithLiked) {
@@ -55,6 +45,9 @@ class SearchAdapter(
                 .into(binding.searchThumbnail)
             binding.searchTitle.text = videoEntity.title
             binding.searchChannelTitle.text = videoEntity.channelTitle
+
+            val src = if (item.liked) R.drawable.ic_thumb_fill else R.drawable.ic_thumb_empty
+            binding.searchLikeBtn.setImageResource(src)
 
             val formattedDate = try {
                 val parsedDate = OffsetDateTime.parse(videoEntity.releaseDate)

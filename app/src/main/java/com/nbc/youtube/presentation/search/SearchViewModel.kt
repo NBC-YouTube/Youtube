@@ -21,7 +21,7 @@ class SearchViewModel(
     val kidSearch : LiveData<Boolean>
         get() = _kidsSearch
 
-    private val _isLiked = MutableLiveData<Boolean>()
+    private var selectedItem : VideoInfoWithLiked = VideoInfoWithLiked.EMPTY
 
     private fun mapToVideoEntityWithLiked(
         videos: List<VideoInfo>,
@@ -54,17 +54,16 @@ class SearchViewModel(
     }
 
     fun updateLiked(video: VideoInfoWithLiked) {
-        val liked = _isLiked.value?.not() ?: return
-        _isLiked.value = liked
+        val newLiked = video.liked.not()
 
         viewModelScope.launch {
-            if(liked) {
+            if(newLiked) {
                 repository.addFavoriteVideo(video.likedToVideoInfo())
             } else {
                 repository.removeFavoriteVideo(video.likedToVideoInfo())
             }
             _searchVideos.value = _searchVideos.value?.map {
-                if (it.id == video.id) it.copy(liked = liked) else it
+                if (it.id == video.id) it.copy(liked = newLiked) else it
             }
         }
     }
@@ -73,7 +72,6 @@ class SearchViewModel(
         _kidsSearch.value = kidsSearch
     }
 
-    private var selectedItem : VideoInfoWithLiked = VideoInfoWithLiked.EMPTY
     fun updateSelectedItem(selectedItem: VideoInfoWithLiked) {
         this.selectedItem = selectedItem
     }
